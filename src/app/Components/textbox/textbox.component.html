@@ -1,1 +1,1 @@
-<div class="textbox" name="textbox" (keydown)="handleKeyDown($event)" [innerHTML]="textHtml" tabindex="0"></div>
+<div #textbox class="textbox" name="textbox" (keydown)="handleKeyDown($event)" (click)="textbox.focus()" [innerHTML]="textHtml" tabindex="0"></div>

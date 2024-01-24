@@ -59,9 +59,10 @@ export class TextboxComponent {
 
   private letterArrayToHtml(letterArray: Array<Letter>): string {
     return letterArray.map((letter, index) => {
-      const cursorClass = index === (this._cursorIndex - 1) ? " cursor" : "";
+      const cursorClass = index === this._cursorIndex ? " cursor" : "";
+
       if (letter.typed === false) {
-        return "<span>" + letter.content + "</span>";
+        return `<span class='${cursorClass}'>` + letter.content + `</span>`;
       }else if (letter.correct) {
         return `<span class='correct${cursorClass}'>` + letter.content + `</span>`;
       }

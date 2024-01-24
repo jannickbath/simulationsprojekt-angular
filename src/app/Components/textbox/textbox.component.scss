@@ -17,18 +17,24 @@
         background-color: darkred;
     }
 
-    span.cursor {
-        position: relative;
-
-        &::after {
-            content: "";
-            position: absolute;
-            right: 0;
-            top: 0;
-            width: 3px;
-            height: 100%;
-            background-color: red;
-            animation: blink 1.25s ease-out infinite;
+    .textbox {
+        &:focus-within {
+            outline: none;
+            
+            span.cursor {
+                position: relative;
+    
+                &::after {
+                    content: "";
+                    position: absolute;
+                    left: 0;
+                    top: 0;
+                    width: 3px;
+                    height: 100%;
+                    background-color: red;
+                    animation: blink 1.25s ease-out infinite;
+                }
+            }
         }
     }
 }
