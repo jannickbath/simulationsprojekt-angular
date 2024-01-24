@@ -1,5 +1,4 @@
-import { Component } from '@angular/core';
-import { TextService } from '../../Services/text.service';
+import { Component, ViewEncapsulation } from '@angular/core';
 import { Letter } from '../../Types';
 import { ValidatePipe } from '../../Pipes/validate.pipe';
 
@@ -8,7 +7,8 @@ import { ValidatePipe } from '../../Pipes/validate.pipe';
   standalone: true,
   imports: [ValidatePipe],
   templateUrl: './textbox.component.html',
-  styleUrl: './textbox.component.scss'
+  styleUrl: './textbox.component.scss',
+  encapsulation: ViewEncapsulation.ShadowDom
 })
 
 export class TextboxComponent {
@@ -29,6 +29,7 @@ export class TextboxComponent {
     const lastKey = reversedText.find(letterObj => letterObj.typed);
     if (lastKey) {
       lastKey.typed = false;
+      lastKey.correct = false;
     }
   }
 
@@ -55,10 +56,12 @@ export class TextboxComponent {
 
   private letterArrayToHtml(letterArray: Array<Letter>): string {
     return letterArray.map(letter => {
-      if (letter.correct || letter.typed === false) {
+      if (letter.typed === false) {
         return "<span>" + letter.content + "</span>";
+      }else if (letter.correct) {
+        return "<span class='correct'>" + letter.content + "</span>";
       }
-      return "<span><strong>" + letter.content + "</strong></span>";
+      return "<span class='invalid'>" + letter.content + "</span>";
     }).join("");
   }
 }
