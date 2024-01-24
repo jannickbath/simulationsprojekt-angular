@@ -1,1 +1,2 @@
-<textarea name="textbox" readonly>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quasi earum animi porro vitae nihil exercitationem eius saepe, nesciunt, natus sunt error, iste cupiditate accusamus explicabo.</textarea>
+<div name="textbox" (keydown)="handleKeyDown($event)" [innerHTML]="textHtml" tabindex="0" readonly></div>
+<!-- <p [innerHTML]="textHtml"></p> -->

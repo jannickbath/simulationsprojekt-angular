@@ -4,6 +4,7 @@ import { Injectable } from '@angular/core';
   providedIn: 'root'
 })
 export class TextService {
+  text: string = "Lorem ipsum dolor sit amet, consectetur adipisicing elit.";
 
   constructor() { }
 }
