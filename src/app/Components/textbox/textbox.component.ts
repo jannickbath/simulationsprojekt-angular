@@ -13,6 +13,7 @@ import { ValidatePipe } from '../../Pipes/validate.pipe';
 
 export class TextboxComponent {
   private _text: Array<Letter> = this.textToLetterArray("Lorem ipsum sit dolor amet.");
+  private _cursorIndex: number = 0;
 
   public handleKeyDown = ($event: KeyboardEvent) => {
     if ($event.key.length > 1) {
@@ -30,6 +31,7 @@ export class TextboxComponent {
     if (lastKey) {
       lastKey.typed = false;
       lastKey.correct = false;
+      this._cursorIndex--;
     }
   }
 
@@ -43,6 +45,7 @@ export class TextboxComponent {
       currentKey.correct = false;
     }
     currentKey.typed = true;
+    this._cursorIndex++;
   }
 
   get textHtml() {
@@ -55,13 +58,14 @@ export class TextboxComponent {
   }
 
   private letterArrayToHtml(letterArray: Array<Letter>): string {
-    return letterArray.map(letter => {
+    return letterArray.map((letter, index) => {
+      const cursorClass = index === (this._cursorIndex - 1) ? " cursor" : "";
       if (letter.typed === false) {
         return "<span>" + letter.content + "</span>";
       }else if (letter.correct) {
-        return "<span class='correct'>" + letter.content + "</span>";
+        return `<span class='correct${cursorClass}'>` + letter.content + `</span>`;
       }
-      return "<span class='invalid'>" + letter.content + "</span>";
+      return `<span class='invalid${cursorClass}'>` + letter.content + `</span>`;
     }).join("");
   }
 }
