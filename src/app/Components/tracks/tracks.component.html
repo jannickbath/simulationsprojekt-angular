@@ -1,1 +1,8 @@
-<p>tracks works!</p>
+<ul class="tracks">
+    <li *ngFor="let player of playerService.players">
+        <ul class="stripes">
+            <li *ngForOf="let key of (5 | toArray)"></li>
+        </ul>
+        <app-car [player]="player"></app-car>
+    </li>
+</ul>
