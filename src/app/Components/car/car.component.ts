@@ -14,4 +14,8 @@ export class CarComponent {
   get carModel() {
     return this.player.human ? "brick" : "default";
   }
+
+  get progress() {
+    return this.player.progress + "%";
+  }
 }

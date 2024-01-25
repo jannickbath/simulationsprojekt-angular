@@ -18,7 +18,7 @@ export class TextboxComponent {
   private _player: Player | undefined;
 
   constructor(playerService: PlayerService) {
-    this._player = playerService.players.find(player => player.human);
+    this._player = playerService.humanPlayer;
   }
 
   public handleKeyDown = ($event: KeyboardEvent) => {

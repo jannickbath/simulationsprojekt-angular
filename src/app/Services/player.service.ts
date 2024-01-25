@@ -30,6 +30,10 @@ export class PlayerService {
     return this._players;
   }
 
+  get humanPlayer() {
+    return this._players.find(player => player.human);
+  }
+
   public addPlayer = (name: Player["name"]) => {
     const playerId = this._players.length + 1;
     this._players.push({id: playerId, name: name, progress: 0, human: false});
