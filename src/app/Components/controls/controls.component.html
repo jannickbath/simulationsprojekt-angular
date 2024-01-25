@@ -1,10 +1,14 @@
 <div class="controls">
     <div class="cpm">0</div>
     <div class="button-section">
-        <button class="game-state-toggle">Start Race</button>
+        <button class="game-state-toggle" [class.active]="running" (click)="gameService.toggle()">
+            {{running ? "Stop Race": "Start Race"}}
+        </button>
         -
-        <div class="game-state-display">Paused</div>
+        <div class="game-state-display">
+            {{running ? "Running": "Paused"}}
+        </div>
         -
-        <button class="game-add-bot">Generate Bot</button>
+        <button class="game-add-bot" (click)="addBot()" [disabled]="bots.length > 2">Generate Bot</button>
     </div>
 </div>

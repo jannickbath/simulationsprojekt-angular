@@ -14,13 +14,7 @@ export class PlayerService {
     },
     {
       id: 2,
-      name: "Bot",
-      progress: 0,
-      human: false
-    },
-    {
-      id: 3,
-      name: "Bot",
+      name: "Bot 1",
       progress: 0,
       human: false
     }
@@ -32,6 +26,10 @@ export class PlayerService {
 
   get humanPlayer() {
     return this._players.find(player => player.human);
+  }
+
+  get bots() {
+    return this._players.filter(player => !player.human);
   }
 
   public addPlayer = (name: Player["name"]) => {
