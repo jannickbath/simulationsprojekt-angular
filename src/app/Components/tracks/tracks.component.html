@@ -1,7 +1,7 @@
 <ul class="tracks">
     <li *ngFor="let player of playerService.players">
         <ul class="stripes">
-            <li *ngForOf="let key of (5 | toArray)"></li>
+            <li *ngFor="let key of (20 | toArray)"></li>
         </ul>
         <app-car [player]="player"></app-car>
     </li>

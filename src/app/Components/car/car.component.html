@@ -1,3 +1,19 @@
-<div class="car">
-    <div class="label">{{player.name}}</div>
+<div class="car car-{{carModel}}">
+    <div class="car__body">
+      <div class="car__body__topper">
+        <div class="car__body__topper__front-glas"></div>
+        <div class="car__body__topper__back-glas"></div>
+      </div>
+      <div class="car__body__headlight"></div>
+      <div class="car__body__taillight"></div>
+      <div class="car__body__tires">
+        <div class="car__body__tires__front car__body__tires__tire">
+          <div class="car__body__tires__tire__inner"></div>
+        </div>
+        <div class="car__body__tires__back car__body__tires__tire">
+          <div class="car__body__tires__tire__inner"></div>
+        </div>
+      </div>
+    </div>
+    <div class="player-name">{{player.name}}</div>
 </div>

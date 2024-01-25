@@ -1,0 +1,134 @@
+@mixin car($scalingFactor) {
+    width: calc(360px / #{$scalingFactor});
+    height: calc(150px / #{$scalingFactor});
+    position: absolute;
+    transition: left 1.5s linear;
+
+    &.active {
+        border: 2px solid red;
+    }
+
+    .player-name {
+        width: fit-content;
+        height: fit-content;
+        position: absolute;
+        top: 10px;
+        right: 25px;
+        background-color: skyblue;
+        padding: 0.25rem 0.5rem;
+    }
+
+    &__body {
+        width: calc(350px / #{$scalingFactor});
+        height: calc(80px / #{$scalingFactor});
+        position: absolute;
+        left: 5px;
+        bottom: 5px;
+        background-color: #3A83D3;
+        border-radius: calc(50px / #{$scalingFactor}) calc(80px / #{$scalingFactor}) calc(40px / #{$scalingFactor}) calc(20px / #{$scalingFactor});
+        border: 5px solid black;
+
+        &__headlight {
+            position: absolute;
+            right: calc(-10px / #{$scalingFactor});
+            top: 25%;
+            width: calc(20px / #{$scalingFactor});
+            height: calc(45px / #{$scalingFactor});
+            background-color: yellow;
+            border: 3px solid black;
+            border-radius: 0 calc(20px / #{$scalingFactor}) calc(20px / #{$scalingFactor}) 0;
+        }
+
+        &__taillight {
+            position: absolute;
+            left: calc(-15px / #{$scalingFactor});
+            top: 25%;
+            width: calc(25px / #{$scalingFactor});
+            height: calc(45px / #{$scalingFactor});
+            background-color: red;
+            border: 3px solid black;
+            border-radius: calc(15px / #{$scalingFactor}) 0 0 calc(15px / #{$scalingFactor});
+        }
+        
+        &__topper {
+            position: absolute;
+            left: calc(60px / #{$scalingFactor});
+            bottom: 100%;
+            width: calc(180px / #{$scalingFactor});
+            height: calc(60px / #{$scalingFactor});
+            border-radius: calc(180px / #{$scalingFactor}) calc(180px / #{$scalingFactor}) 0 0;
+            background-color: #3A83D3;
+            border-top: 5px solid black;
+            border-right: 5px solid black;
+            border-left: 5px solid black;
+        }
+
+        &__tires {
+            &__tire {
+                position: absolute;
+                width: calc(70px / #{$scalingFactor});
+                height: calc(70px / #{$scalingFactor});
+                border-radius: 50%;
+                border: 5px solid black;
+                background-color: #4B4B4B;
+
+                &__inner {
+                    position: absolute;
+                    width: calc(40px / #{$scalingFactor});
+                    height: calc(40px / #{$scalingFactor});
+                    left: 50%;
+                    top: 50%;
+                    transform: translate(-50%, -50%);
+                    border-radius: 50%;
+                    border: 3px solid black;
+                    background-color: #9C9C9D;
+
+                    &::after {
+                        content: "";
+                        position: absolute;
+                        width: calc(15px / #{$scalingFactor});
+                        height: calc(15px / #{$scalingFactor});
+                        left: 50%;
+                        top: 50%;
+                        transform: translate(-50%, -50%);
+                        border-radius: 50%;
+                        border: 3px solid black;
+                        background-color: #4B4B4B;
+                    }
+                }
+            }
+
+            &__front {
+                left: calc(50px / #{$scalingFactor});
+                bottom: -20%;
+            }
+
+            &__back {
+                right: calc(60px / #{$scalingFactor});
+                bottom: -20%;
+            }
+        }
+    }
+
+    &.car-brick {
+        width: calc(410px / #{$scalingFactor});
+        
+        .car__body {
+            width: calc(400px / #{$scalingFactor});
+            height: calc(80px / #{$scalingFactor});
+            border-radius: calc(50px / #{$scalingFactor}) calc(35px / #{$scalingFactor}) calc(15px / #{$scalingFactor}) calc(15px / #{$scalingFactor});
+            background-color: rgb(35, 140, 40);
+
+            &__topper {
+                width: calc(150px / #{$scalingFactor});
+                background-color: rgb(35, 140, 40);
+            }
+        }
+    }
+}
+
+.car {
+    @include car(1.3);
+    bottom: 0;
+    left: 5px;
+}

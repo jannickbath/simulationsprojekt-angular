@@ -9,7 +9,20 @@ export class PlayerService {
     {
       id: 1,
       name: "You",
-      progress: 0
+      progress: 0,
+      human: true
+    },
+    {
+      id: 2,
+      name: "Bot",
+      progress: 0,
+      human: false
+    },
+    {
+      id: 3,
+      name: "Bot",
+      progress: 0,
+      human: false
     }
   ];
 
@@ -19,6 +32,6 @@ export class PlayerService {
 
   public addPlayer = (name: Player["name"]) => {
     const playerId = this._players.length + 1;
-    this._players.push({id: playerId, name: name, progress: 0});
+    this._players.push({id: playerId, name: name, progress: 0, human: false});
   }
 }

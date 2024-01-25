@@ -8,4 +8,5 @@ export type Player = {
   id: number;
   name: string;
   progress: number;
+  human: boolean;
 }

@@ -10,4 +10,8 @@ import { Player } from '../../Types';
 })
 export class CarComponent {
   @Input({ required: true }) player !: Player;
+
+  get carModel() {
+    return this.player.human ? "brick" : "default";
+  }
 }
