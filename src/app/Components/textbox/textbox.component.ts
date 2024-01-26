@@ -5,18 +5,19 @@ import { PlayerService } from '../../Services/player.service';
 import { GameService } from '../../Services/game.service';
 import { PopupService } from '../../Services/popup.service';
 import { QuotableService } from '../../Services/quotable.service';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-textbox',
   standalone: true,
-  imports: [ValidatePipe],
+  imports: [ValidatePipe, CommonModule],
   templateUrl: './textbox.component.html',
   styleUrl: './textbox.component.scss',
   encapsulation: ViewEncapsulation.ShadowDom
 })
 
 export class TextboxComponent {
-  private _text: Array<Letter> = this.textToLetterArray("Lorem ipsum sit dolor amet.");
+  private _text: Array<Letter> = [];
   private _cursorIndex: number = 0;
   private _reseted: boolean = false;
 
