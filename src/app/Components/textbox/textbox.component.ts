@@ -40,7 +40,6 @@ export class TextboxComponent {
 
   constructor(private playerService: PlayerService, private gameService: GameService, private popupService: PopupService, private quotableService: QuotableService) {
     gameService.tickEventEmitter.subscribe(() => this.handleGameTick());
-    this.fetchQuote();
   }
 
   public focusTextbox() {
@@ -48,6 +47,7 @@ export class TextboxComponent {
   }
 
   private fetchQuote() {
+    this._text = []; // initiate loading animation
     this.quotableService.getQuote().subscribe(QResponse => {
       this._text = this.textToLetterArray(QResponse[0].content);
     })
@@ -57,6 +57,7 @@ export class TextboxComponent {
     if (!this.running) {
       if (!this._reseted) {
         this.resetPlayerProgress();
+        this.fetchQuote();
         this._reseted = true;
       }
     }else {
