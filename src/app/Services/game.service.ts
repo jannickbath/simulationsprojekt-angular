@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { EventEmitter, Injectable } from '@angular/core';
 import { PlayerService } from './player.service';
 import { Helper } from '../Helper';
 import { Player } from '../Types';
@@ -8,6 +8,7 @@ import { Player } from '../Types';
 })
 export class GameService {
   private _running: boolean = false;
+  public tickEventEmitter = new EventEmitter<never>();
 
   constructor(private playerService: PlayerService) {
     this.setupGameLoop();
@@ -15,6 +16,7 @@ export class GameService {
 
   private setupGameLoop() {
     setInterval(() => {
+      this.tickEventEmitter.emit();
       if (!this._running) return;
 
       this.playerService.bots.forEach(bot => {

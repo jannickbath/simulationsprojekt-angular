@@ -1,7 +1,8 @@
-import { Component, ViewEncapsulation } from '@angular/core';
+import { Component, Output, ViewEncapsulation } from '@angular/core';
 import { Letter, Player } from '../../Types';
 import { ValidatePipe } from '../../Pipes/validate.pipe';
 import { PlayerService } from '../../Services/player.service';
+import { GameService } from '../../Services/game.service';
 
 @Component({
   selector: 'app-textbox',
@@ -15,13 +16,38 @@ import { PlayerService } from '../../Services/player.service';
 export class TextboxComponent {
   private _text: Array<Letter> = this.textToLetterArray("Lorem ipsum sit dolor amet.");
   private _cursorIndex: number = 0;
-  private _player: Player | undefined;
 
-  constructor(playerService: PlayerService) {
-    this._player = playerService.humanPlayer;
+  private get _player() {
+    return this.playerService.humanPlayer;
+  }
+
+  private get _running() {
+    return this.gameService.running;
+  }
+
+  constructor(private playerService: PlayerService, private gameService: GameService) {
+    gameService.tickEventEmitter.subscribe(() => this.handleGameTick());
+  }
+
+  private handleGameTick() {
+    if (!this._running) this.resetPlayerProgress();
+  }
+
+  private resetPlayerProgress() {
+    this._text.forEach(letter => {
+      letter.correct = false;
+      letter.typed = false;
+    })
+    this._cursorIndex = 0;
+
+    if (this._player) {
+      this._player.progress = 0;
+    }
   }
 
   public handleKeyDown = ($event: KeyboardEvent) => {
+    if (!this._running) return;
+
     if ($event.key.length > 1) {
       if ($event.key === "Backspace") {
         this.handleBackspace();
