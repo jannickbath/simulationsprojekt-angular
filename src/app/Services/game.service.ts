@@ -35,7 +35,7 @@ export class GameService {
     setTimeout(() => this.resetBotProgress(), 1000);
   }
 
-  private resetBotProgress() {
+  public resetBotProgress() {
     this.playerService.bots.forEach(bot => {
       bot.progress = 0;
     })

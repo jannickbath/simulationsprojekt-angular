@@ -26,6 +26,14 @@ export class TextboxComponent {
     return this.gameService.running;
   }
 
+  private get _progress() {
+    return Math.floor(this._player ? this._player.progress : 0);
+  }
+
+  public get textHtml() {
+    return this.letterArrayToHtml(this._text);
+  }
+
   constructor(private playerService: PlayerService, private gameService: GameService) {
     gameService.tickEventEmitter.subscribe(() => this.handleGameTick());
   }
@@ -37,8 +45,17 @@ export class TextboxComponent {
         this._reseted = true;
       }
     }else {
+      if (this._progress === 100) {
+        this.handleHumanWinner();
+      }
       this._reseted = false;
     }
+  }
+
+  private handleHumanWinner() {
+    console.log(this._player?.name + " has won!");
+    this.gameService.stop();
+    setTimeout(() => this.gameService.resetBotProgress(), 1000);
   }
 
   private resetPlayerProgress() {
@@ -95,17 +112,6 @@ export class TextboxComponent {
     if (this._player) {
       this._player.progress = (correctLetters.length / this._text.length) * 100;
     }
-  }
-
-  get textHtml() {
-    return this.letterArrayToHtml(this._text);
-  }
-
-  get progress() {
-    if (this._player) {
-      return Math.floor(this._player.progress);
-    }
-    return 0;
   }
 
   private textToLetterArray(text: string): Array<Letter> {
