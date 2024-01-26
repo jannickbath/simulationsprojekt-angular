@@ -1,9 +1,10 @@
-import { Component, Output, ViewEncapsulation } from '@angular/core';
-import { Letter, Player } from '../../Types';
+import { Component, ViewEncapsulation } from '@angular/core';
+import { Letter } from '../../Types';
 import { ValidatePipe } from '../../Pipes/validate.pipe';
 import { PlayerService } from '../../Services/player.service';
 import { GameService } from '../../Services/game.service';
 import { PopupService } from '../../Services/popup.service';
+import { QuotableService } from '../../Services/quotable.service';
 
 @Component({
   selector: 'app-textbox',
@@ -35,8 +36,15 @@ export class TextboxComponent {
     return this.letterArrayToHtml(this._text);
   }
 
-  constructor(private playerService: PlayerService, private gameService: GameService, private popupService: PopupService) {
+  constructor(private playerService: PlayerService, private gameService: GameService, private popupService: PopupService, private quotableService: QuotableService) {
     gameService.tickEventEmitter.subscribe(() => this.handleGameTick());
+    this.fetchQuote();
+  }
+
+  private fetchQuote() {
+    this.quotableService.getQuote().subscribe(QResponse => {
+      this._text = this.textToLetterArray(QResponse[0].content);
+    })
   }
 
   private handleGameTick() {    
