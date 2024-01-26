@@ -16,6 +16,7 @@ import { GameService } from '../../Services/game.service';
 export class TextboxComponent {
   private _text: Array<Letter> = this.textToLetterArray("Lorem ipsum sit dolor amet.");
   private _cursorIndex: number = 0;
+  private _reseted: boolean = false;
 
   private get _player() {
     return this.playerService.humanPlayer;
@@ -29,8 +30,15 @@ export class TextboxComponent {
     gameService.tickEventEmitter.subscribe(() => this.handleGameTick());
   }
 
-  private handleGameTick() {
-    if (!this._running) this.resetPlayerProgress();
+  private handleGameTick() {    
+    if (!this._running) {
+      if (!this._reseted) {
+        this.resetPlayerProgress();
+        this._reseted = true;
+      }
+    }else {
+      this._reseted = false;
+    }
   }
 
   private resetPlayerProgress() {

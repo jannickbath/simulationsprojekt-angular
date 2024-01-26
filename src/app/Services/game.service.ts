@@ -32,10 +32,10 @@ export class GameService {
   private handleWinnerBot(bot: Player) {
     console.log(bot.name + " has won!");
     this.stop();
-    setTimeout(() => this.resetProgress(), 1000);
+    setTimeout(() => this.resetBotProgress(), 1000);
   }
 
-  private resetProgress() {
+  private resetBotProgress() {
     this.playerService.bots.forEach(bot => {
       bot.progress = 0;
     })
