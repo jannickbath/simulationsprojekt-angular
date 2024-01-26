@@ -5,25 +5,15 @@ import { Popup } from '../Types';
   providedIn: 'root'
 })
 export class PopupService {
-  private _popups: Array<Popup> = [
-    {
-      id: 1,
-      headline: "Lorem",
-      description: "Lorem ipsum sit dolor amet."
-    },
-    {
-      id: 2,
-      headline: "Lorem 2",
-      description: "Lorem ipsum sit dolor amet. 2"
-    }
-  ];
+  private _popups: Array<Popup> = [];
 
   public get popups() {
     return this._popups;
   }
 
-  public addPopup(popup: Popup) {
-    this._popups.push(popup);
+  public addPopup(headline: string, description: string) {
+    const id = this._popups.length + 1;
+    this._popups.push({id: id, headline: headline, description: description});
   }
 
   public removePopup(id: number) {

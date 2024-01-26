@@ -2,6 +2,7 @@ import { EventEmitter, Injectable } from '@angular/core';
 import { PlayerService } from './player.service';
 import { Helper } from '../Helper';
 import { Player } from '../Types';
+import { PopupService } from './popup.service';
 
 @Injectable({
   providedIn: 'root'
@@ -10,7 +11,7 @@ export class GameService {
   private _running: boolean = false;
   public tickEventEmitter = new EventEmitter<never>();
 
-  constructor(private playerService: PlayerService) {
+  constructor(private playerService: PlayerService, private popupService: PopupService) {
     this.setupGameLoop();
   }
 
@@ -30,7 +31,7 @@ export class GameService {
   }
 
   private handleWinnerBot(bot: Player) {
-    console.log(bot.name + " has won!");
+    this.popupService.addPopup("Game Over!", "Player " + bot.name + " has won!");
     this.stop();
     setTimeout(() => this.resetBotProgress(), 1000);
   }

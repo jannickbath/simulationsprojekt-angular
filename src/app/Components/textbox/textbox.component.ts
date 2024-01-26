@@ -3,6 +3,7 @@ import { Letter, Player } from '../../Types';
 import { ValidatePipe } from '../../Pipes/validate.pipe';
 import { PlayerService } from '../../Services/player.service';
 import { GameService } from '../../Services/game.service';
+import { PopupService } from '../../Services/popup.service';
 
 @Component({
   selector: 'app-textbox',
@@ -34,7 +35,7 @@ export class TextboxComponent {
     return this.letterArrayToHtml(this._text);
   }
 
-  constructor(private playerService: PlayerService, private gameService: GameService) {
+  constructor(private playerService: PlayerService, private gameService: GameService, private popupService: PopupService) {
     gameService.tickEventEmitter.subscribe(() => this.handleGameTick());
   }
 
@@ -53,7 +54,7 @@ export class TextboxComponent {
   }
 
   private handleHumanWinner() {
-    console.log(this._player?.name + " has won!");
+    this.popupService.addPopup("Game Over!", "You have won the game!");
     this.gameService.stop();
     setTimeout(() => this.gameService.resetBotProgress(), 1000);
   }
