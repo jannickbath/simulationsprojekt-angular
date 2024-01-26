@@ -9,6 +9,7 @@ import { PopupService } from './popup.service';
 })
 export class GameService {
   private _running: boolean = false;
+  private _winner: Player | null = null;
   public tickEventEmitter = new EventEmitter<never>();
 
   constructor(private playerService: PlayerService, private popupService: PopupService) {
@@ -31,15 +32,19 @@ export class GameService {
   }
 
   private handleWinnerBot(bot: Player) {
-    this.popupService.addPopup("Game Over!", "Player " + bot.name + " has won!");
+    if (this._winner) return;
+
     this.stop();
+    this.popupService.addPopup("Game Over!", "Player " + bot.name + " has won!");
     setTimeout(() => this.resetBotProgress(), 1000);
+    this._winner = bot;
   }
 
   public resetBotProgress() {
     this.playerService.bots.forEach(bot => {
       bot.progress = 0;
     })
+    this._winner = null;
   }
 
   public start() {
