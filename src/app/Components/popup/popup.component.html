@@ -1,0 +1,6 @@
+<dialog #dialog open *ngFor="let popup of popups">
+    <h1 class="headline">{{popup.headline}}</h1>
+    <div class="description">{{popup.description}}</div>
+    <button class="close-button" (click)="removePopup(popup.id)">X</button>
+    <button class="clear-button" (click)="clearPopups()">Close All</button>
+</dialog>

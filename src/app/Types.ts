@@ -10,3 +10,9 @@ export type Player = {
   progress: number;
   human: boolean;
 }
+
+export type Popup = {
+  id: number;
+  headline: string;
+  description: string;
+}
