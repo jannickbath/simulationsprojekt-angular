@@ -3,6 +3,7 @@ import { PlayerService } from './player.service';
 import { Helper } from '../Helper';
 import { Player } from '../Types';
 import { PopupService } from './popup.service';
+import { BehaviorSubject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -10,14 +11,19 @@ import { PopupService } from './popup.service';
 export class GameService {
   private _running: boolean = false;
   private _winner: Player | null = null;
+  private _interval: any;
+  private _defaultTickDelay: number = 1000;
+  public tickDelay$ = new BehaviorSubject<number>(this._defaultTickDelay);
   public tickEventEmitter = new EventEmitter<never>();
 
   constructor(private playerService: PlayerService, private popupService: PopupService) {
-    this.setupGameLoop();
+    this.tickDelay$.subscribe(delay => this.setupGameLoop(delay));
   }
 
-  private setupGameLoop() {
-    setInterval(() => {
+  private setupGameLoop(delay: number) {
+    if (this._interval) clearInterval(this._interval);
+
+    this._interval = setInterval(() => {
       this.tickEventEmitter.emit();
       if (!this._running) return;
 
@@ -28,7 +34,7 @@ export class GameService {
           this.handleWinnerBot(bot);
         }
       })
-    }, 1000);
+    }, delay);
   }
 
   private handleWinnerBot(bot: Player) {
@@ -61,5 +67,9 @@ export class GameService {
 
   get running() {
     return this._running;
+  }
+
+  get defaultTickDelay() {
+    return this._defaultTickDelay;
   }
 }

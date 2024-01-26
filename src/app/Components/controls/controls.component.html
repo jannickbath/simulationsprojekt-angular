@@ -11,4 +11,8 @@
         -
         <button class="game-add-bot" (click)="addBot()" [disabled]="bots.length > 2">Generate Bot</button>
     </div>
+    <div class="speed">
+        <div class="speed-display">{{range.value}}</div>
+        <input #range type="range" min="0.5" max="2" step="0.5" (change)="setTickDelay(range.value)">
+    </div>
 </div>

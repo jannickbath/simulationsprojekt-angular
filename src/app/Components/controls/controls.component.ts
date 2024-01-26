@@ -17,6 +17,12 @@ export class ControlsComponent {
     this.playerService.addPlayer("Bot " + (botCount + 1));
   }
 
+  public setTickDelay(multiplier: string) {
+    const defaultTickDelay = this.gameService.defaultTickDelay;
+    const tickDelay$ = this.gameService.tickDelay$;
+    tickDelay$.next(defaultTickDelay * parseFloat(multiplier));
+  }
+
   get running() {
     return this.gameService.running;
   }
