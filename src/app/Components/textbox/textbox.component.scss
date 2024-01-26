@@ -1,6 +1,7 @@
-:host {
+.textbox-wrapper {
     width: 1335px;
     height: 100px;
+    position: relative;
     background-color: skyblue;
     padding: 5px 10px;
     border: 1px solid black;
@@ -9,45 +10,63 @@
     font-family: "Aria";
     overflow: hidden;
 
-    span.correct {
-        background-color: limegreen;
+    &::after {
+        content: "";
+        position: absolute;
+        right: 0.5rem;
+        bottom: 0.5rem;
+        font-size: 14px;
     }
 
-    span.invalid {
-        background-color: darkred;
-    }
+    &:focus-within {
+        outline: none;
 
-    .textbox {
-        &:focus-within {
-            outline: none;
-            
-            span.cursor {
-                position: relative;
-    
-                &::after {
-                    content: "";
-                    position: absolute;
-                    left: 0;
-                    top: 0;
-                    width: 3px;
-                    height: 100%;
-                    background-color: red;
-                    animation: blink 1.25s ease-out infinite;
-                }
+        &:not(.running)::after {
+            content: "Start the game to start typing...";
+        }
+        
+        span.cursor {
+            position: relative;
+
+            &::after {
+                content: "";
+                position: absolute;
+                left: 0;
+                top: 0;
+                width: 3px;
+                height: 100%;
+                background-color: red;
+                animation: blink 1.25s ease-out infinite;
             }
         }
     }
 
-    .spinner {
-        width: 25px;
-        height: 25px;
-        border: 5px solid #FFF;
-        border-bottom-color: transparent;
-        border-radius: 50%;
-        display: inline-block;
-        box-sizing: border-box;
-        animation: rotation 1s linear infinite;
+    &:not(:focus-within) {
+        cursor: text;
+
+        &::after {
+            content: "Click to focus...";
+        }
     }
+
+    span.correct {
+        background-color: limegreen;
+    }
+    
+    span.invalid {
+        background-color: darkred;
+    }
+}
+
+.spinner {
+    width: 25px;
+    height: 25px;
+    border: 5px solid #FFF;
+    border-bottom-color: transparent;
+    border-radius: 50%;
+    display: inline-block;
+    box-sizing: border-box;
+    animation: rotation 1s linear infinite;
 }
 
 @keyframes blink {

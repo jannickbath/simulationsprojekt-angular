@@ -1,2 +1,4 @@
-<div *ngIf="textHtml === ''" class="spinner"></div>
-<div *ngIf="textHtml !== ''" #textbox class="textbox" name="textbox" (keydown)="handleKeyDown($event)" (click)="textbox.focus()" [innerHTML]="textHtml" tabindex="0"></div>
+<div class="textbox-wrapper" (click)="focusTextbox()" [class.running]="running">
+    <div *ngIf="textHtml === ''" class="spinner"></div>
+    <div *ngIf="textHtml !== ''" #textbox class="textbox" (keydown)="handleKeyDown($event)" [innerHTML]="textHtml" tabindex="0"></div>
+</div>

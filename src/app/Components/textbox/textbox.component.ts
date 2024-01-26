@@ -1,4 +1,4 @@
-import { Component, ViewEncapsulation } from '@angular/core';
+import { Component, ElementRef, ViewChild, ViewEncapsulation } from '@angular/core';
 import { Letter } from '../../Types';
 import { ValidatePipe } from '../../Pipes/validate.pipe';
 import { PlayerService } from '../../Services/player.service';
@@ -20,12 +20,13 @@ export class TextboxComponent {
   private _text: Array<Letter> = [];
   private _cursorIndex: number = 0;
   private _reseted: boolean = false;
+  @ViewChild("textbox") textbox!: ElementRef;
 
   private get _player() {
     return this.playerService.humanPlayer;
   }
 
-  private get _running() {
+  public get running() {
     return this.gameService.running;
   }
 
@@ -42,6 +43,10 @@ export class TextboxComponent {
     this.fetchQuote();
   }
 
+  public focusTextbox() {
+    this.textbox.nativeElement.focus();
+  }
+
   private fetchQuote() {
     this.quotableService.getQuote().subscribe(QResponse => {
       this._text = this.textToLetterArray(QResponse[0].content);
@@ -49,7 +54,7 @@ export class TextboxComponent {
   }
 
   private handleGameTick() {    
-    if (!this._running) {
+    if (!this.running) {
       if (!this._reseted) {
         this.resetPlayerProgress();
         this._reseted = true;
@@ -81,7 +86,7 @@ export class TextboxComponent {
   }
 
   public handleKeyDown = ($event: KeyboardEvent) => {
-    if (!this._running) return;
+    if (!this.running) return;
 
     if ($event.key.length > 1) {
       if ($event.key === "Backspace") {
