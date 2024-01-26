@@ -1,7 +1,7 @@
 import { Component, ViewEncapsulation } from '@angular/core';
-import { Letter } from '../../Types';
+import { Letter, Player } from '../../Types';
 import { ValidatePipe } from '../../Pipes/validate.pipe';
-import { TextService } from '../../Services/text.service';
+import { PlayerService } from '../../Services/player.service';
 
 @Component({
   selector: 'app-textbox',
@@ -13,20 +13,12 @@ import { TextService } from '../../Services/text.service';
 })
 
 export class TextboxComponent {
+  private _text: Array<Letter> = this.textToLetterArray("Lorem ipsum sit dolor amet.");
   private _cursorIndex: number = 0;
+  private _player: Player | undefined;
 
-  constructor(private textService: TextService) { }
-
-  private get _text() {
-    return this.textService.text;
-  }
-
-  private get updateProgress() {
-    return this.textService.updateProgress;
-  }
-
-  public get textHtml() {
-    return this.letterArrayToHtml(this._text);
+  constructor(playerService: PlayerService) {
+    this._player = playerService.humanPlayer;
   }
 
   public handleKeyDown = ($event: KeyboardEvent) => {
@@ -62,6 +54,29 @@ export class TextboxComponent {
     currentKey.typed = true;
     this._cursorIndex++;
     this.updateProgress();
+  }
+
+  private updateProgress() {
+    const correctLetters = this._text.filter(letter => letter.correct);
+    if (this._player) {
+      this._player.progress = (correctLetters.length / this._text.length) * 100;
+    }
+  }
+
+  get textHtml() {
+    return this.letterArrayToHtml(this._text);
+  }
+
+  get progress() {
+    if (this._player) {
+      return Math.floor(this._player.progress);
+    }
+    return 0;
+  }
+
+  private textToLetterArray(text: string): Array<Letter> {
+    const textArr = text.split("");
+    return textArr.map(letter => ({content: letter, correct: false, typed: false}))
   }
 
   private letterArrayToHtml(letterArray: Array<Letter>): string {
