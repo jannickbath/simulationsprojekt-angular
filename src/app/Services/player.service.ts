@@ -34,8 +34,8 @@ export class PlayerService {
     return this._players.filter(player => !player.human);
   }
 
-  public addPlayer = (name: Player["name"]) => {
+  public addPlayer = (name: Player["name"], baseSpeed: number = 15) => {
     const playerId = this._players.length + 1;
-    this._players.push({id: playerId, name: name, progress: 0, human: false, baseSpeed: 15});
+    this._players.push({id: playerId, name: name, progress: 0, human: false, baseSpeed: baseSpeed});
   }
 }

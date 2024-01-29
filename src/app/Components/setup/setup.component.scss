@@ -1,0 +1,84 @@
+dialog {
+    position: absolute;
+    width: 70vw;
+    height: 70vh;
+    top: 15%;
+    left: 50%;
+    padding: 1rem;
+    transform: translateX(-50%);
+    background-color: grey;
+    box-shadow: 5px 5px 5px black;
+    text-align: center;
+
+    button {
+        font-size: 20px;
+        padding: 0.20rem 0.35rem;
+        border: 1px solid black;
+        background-color: grey;
+        cursor: pointer;
+    }
+
+    .close-button {
+        position: absolute;
+        top: 1rem;
+        right: 1rem;        
+    }
+
+    .clear-button {
+        position: absolute;
+        bottom: 1rem;
+        right: 1rem;
+    }
+}
+
+.car {
+    position: relative !important;
+}
+
+.inputs {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    row-gap: 1.5rem;
+    margin-top: 2rem;
+}
+
+.add-bot {
+    display: none;
+    width: fit-content;
+    height: fit-content;
+    padding: 1rem 2rem;
+    margin: auto;
+    cursor: pointer;
+    background-color: white;
+
+    &.active {
+        display: block;
+    }
+}
+
+.add-bot__wrapper {
+    display: none;
+
+    label {
+        width: fit-content;
+        margin-bottom: 5px;
+    }
+
+    &__speed,
+    &__name {
+        height: 25px;
+        border: none;
+        margin-bottom: 5px;
+        font-size: 18px;
+        background-color: white;
+    }
+
+    &__confirm {
+        height: 30px;
+    }
+
+    &.active {
+        display: grid;
+        place-content: center;
+    }
+}
