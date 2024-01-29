@@ -24,10 +24,10 @@
     <div class="form-fields">
         <div class="text-length">
             <label for="text-length">Maximale Textlänge:</label>
-            <input #textLengthInput type="text" (keydown.enter)="handleGameSetupSubmit(); gameSetup.close()" name="text-length" placeholder="40" value="40">
+            <input #textLengthInput type="text" (keydown.enter)="handleGameSetupSubmit()" name="text-length" placeholder="40" value="40">
         </div>
-        <button class="game-setup-submit" (click)="handleGameSetupSubmit(); gameSetup.close()">Submit</button>
+        <button class="game-setup-submit" (click)="handleGameSetupSubmit()">Submit</button>
     </div>
-    <button class="close-button" (click)="gameSetup.close()">X</button>
-    <button class="clear-button" (click)="gameSetup.close()">Close</button>
+    <button class="close-button" (click)="handleGameSetupClose()">X</button>
+    <button class="clear-button" (click)="handleGameSetupClose()">Close</button>
 </dialog>

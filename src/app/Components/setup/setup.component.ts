@@ -19,6 +19,7 @@ export class SetupComponent {
   @ViewChild("botInput") botInput!: ElementRef<HTMLInputElement>;
   @ViewChild("botNameInput") botNameInput!: ElementRef<HTMLInputElement>;
   @ViewChild("textLengthInput") textLengthInput!: ElementRef<HTMLInputElement>;
+  @ViewChild("gameSetup") gameSetup!: ElementRef<HTMLDialogElement>;
 
   constructor(private playerService: PlayerService, private quotableService: QuotableService, private gameService: GameService) { }
 
@@ -47,6 +48,12 @@ export class SetupComponent {
     const maxTextLength = parseInt(this.textLengthInput.nativeElement.value);
     this.quotableService.maxTextLength = maxTextLength;
     this.gameService.ranSetup = true;
+    this.gameSetup.nativeElement.close();
+  }
+
+  public handleGameSetupClose() {
+    this.gameService.ranSetup = true;
+    this.gameSetup.nativeElement.close();
   }
 
   get bots() {
