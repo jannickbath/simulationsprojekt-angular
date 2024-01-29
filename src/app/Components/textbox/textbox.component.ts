@@ -95,6 +95,7 @@ export class TextboxComponent {
       }
       return;
     }
+    $event.preventDefault();
     this.handleCharacterKey($event.key);
   }
 
