@@ -31,3 +31,20 @@ To get more help on the Angular CLI use `ng help` or go check out the [Angular C
 
 - Button for opening gameSetup and botSetup again
 - Items
+
+## Zufallsparameter
+
+- Welcher Text gefetcht wird
+- Welcher Bot gewinnen wird
+- Wann welche items auftauchen *
+
+## Eingabeparameter
+
+- Bots hinzufügen (Name, Geschwindigkeit)
+- Maximale Textlänge bestimmen
+- Simulationsgeschwindigkeit anpassen
+- Items platzieren *
+
+## Fix
+
+- Bots are harder for longer texts, because they wont care how long the text is, they just a have their percentage per tick.
