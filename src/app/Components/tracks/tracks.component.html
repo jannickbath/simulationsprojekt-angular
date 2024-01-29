@@ -3,6 +3,7 @@
         <ul class="stripes">
             <li *ngFor="let key of (20 | toArray)"></li>
         </ul>
+        <div class="player-speed" *ngIf="!player.human">{{player.baseSpeed}}</div>
         <app-car [player]="player"></app-car>
     </li>
 </ul>

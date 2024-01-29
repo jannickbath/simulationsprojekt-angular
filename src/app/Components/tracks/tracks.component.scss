@@ -28,6 +28,14 @@
             flex-shrink: 0;
         }
     }
+
+    .player-speed {
+        position: absolute;
+        padding: 0.15rem 0.25rem;
+        background-color: white;
+        left: 0;
+        top: 0;
+    }
 }
 
 ul {

@@ -5,9 +5,27 @@ export type Letter = {
 }
 
 export type Player = {
+  /**
+   * Unique id of the player.
+   */
   id: number;
+  /**
+   * Name of the player. Bots have the default name "Bot" with a number specifying the index ("Bot 1").
+   */
   name: string;
+  /**
+   * Defines the absolute progress (in %).
+   * If a player has reached 100%, he won the game.
+   */
   progress: number;
+  /**
+   * Defines the base progress increase (in %) each game tick.
+   * The actual speed is the base speed with a random offset.
+   */
+  baseSpeed: number;
+  /**
+   * Defines if the player is a bot, or a human player.
+   */
   human: boolean;
 }
 

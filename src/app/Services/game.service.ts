@@ -29,7 +29,7 @@ export class GameService {
 
       this.playerService.bots.forEach(bot => {
         if (bot.progress < 100) {
-          bot.progress += Helper.getRandomNumberInRange(10, 30);
+          bot.progress += bot.baseSpeed + Helper.getRandomNumberInRange(-10, 10);
         }else {
           this.handleWinnerBot(bot);
         }
