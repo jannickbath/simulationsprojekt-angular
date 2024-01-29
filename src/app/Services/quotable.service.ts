@@ -7,11 +7,12 @@ import { QuotableApiResponse } from '../Types';
   providedIn: 'root'
 })
 export class QuotableService {
-  private _baseUrl: string = "https://api.quotable.io/quotes/random?maxLength=40";
+  private _baseUrl: string = "https://api.quotable.io/quotes/random";
+  public maxTextLength: number = 40;
 
   constructor(private http: HttpClient) { }
 
   public getQuote() {
-    return <Observable<Array<QuotableApiResponse>>>this.http.get(this._baseUrl);
+    return <Observable<Array<QuotableApiResponse>>>this.http.get(this._baseUrl + "?maxLength=" + this.maxTextLength);
   }
 }

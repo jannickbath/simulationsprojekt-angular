@@ -14,6 +14,7 @@ export class GameService {
   private _interval: any;
   private _defaultTickDelay: number = 1000;
   public tickDelay$ = new BehaviorSubject<number>(this._defaultTickDelay);
+  public ranSetup: boolean = false;
   public tickEventEmitter = new EventEmitter<never>();
 
   constructor(private playerService: PlayerService, private popupService: PopupService) {

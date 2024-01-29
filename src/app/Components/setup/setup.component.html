@@ -1,6 +1,6 @@
-<dialog open #dialog>
-    <h1 class="headline">Setup</h1>
-    <div class="description">This is the setup. Please fill out the necessary fields.</div>
+<dialog open #carSetup>
+    <h1 class="headline">Bot-Setup</h1>
+    <div class="description">This is the bot setup. Please fill out the necessary fields.</div>
     <div class="inputs">
         <div class="player-wrapper" *ngFor="let bot of bots">
             <app-car [player]="bot"></app-car>
@@ -14,6 +14,20 @@
             <button class="add-bot__wrapper__confirm" (click)="handleConfirm()">Confirm</button>
         </div>
     </div>
-    <button class="close-button" (click)="dialog.close()">X</button>
-    <button class="clear-button" (click)="dialog.close()">Close</button>
+    <button class="close-button" (click)="carSetup.close()">X</button>
+    <button class="clear-button" (click)="carSetup.close()">Close</button>
+</dialog>
+
+<dialog open #gameSetup>
+    <h1 class="headline">Game-Setup</h1>
+    <div class="description">This is the game setup. Please fill out the necessary fields.</div>
+    <div class="form-fields">
+        <div class="text-length">
+            <label for="text-length">Maximale Textlänge:</label>
+            <input #textLengthInput type="text" (keydown.enter)="handleGameSetupSubmit(); gameSetup.close()" name="text-length" placeholder="40" value="40">
+        </div>
+        <button class="game-setup-submit" (click)="handleGameSetupSubmit(); gameSetup.close()">Submit</button>
+    </div>
+    <button class="close-button" (click)="gameSetup.close()">X</button>
+    <button class="clear-button" (click)="gameSetup.close()">Close</button>
 </dialog>

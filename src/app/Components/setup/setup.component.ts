@@ -2,6 +2,8 @@ import { CommonModule } from '@angular/common';
 import { Component, ElementRef, ViewChild, ViewEncapsulation } from '@angular/core';
 import { CarComponent } from '../car/car.component';
 import { PlayerService } from '../../Services/player.service';
+import { QuotableService } from '../../Services/quotable.service';
+import { GameService } from '../../Services/game.service';
 
 @Component({
   selector: 'app-setup',
@@ -16,8 +18,9 @@ export class SetupComponent {
   @ViewChild("addButton") addButton!: ElementRef<HTMLButtonElement>;
   @ViewChild("botInput") botInput!: ElementRef<HTMLInputElement>;
   @ViewChild("botNameInput") botNameInput!: ElementRef<HTMLInputElement>;
+  @ViewChild("textLengthInput") textLengthInput!: ElementRef<HTMLInputElement>;
 
-  constructor(private playerService: PlayerService) { }
+  constructor(private playerService: PlayerService, private quotableService: QuotableService, private gameService: GameService) { }
 
   private addBot(baseSpeed: number) {
     this.playerService.addPlayer(this.botNameInput.nativeElement.value, baseSpeed);
@@ -38,6 +41,12 @@ export class SetupComponent {
     this.botWrapper.nativeElement.classList.remove("active");
     this.addButton.nativeElement.classList.add("active");
     this.addButton.nativeElement.focus();
+  }
+
+  public handleGameSetupSubmit() {
+    const maxTextLength = parseInt(this.textLengthInput.nativeElement.value);
+    this.quotableService.maxTextLength = maxTextLength;
+    this.gameService.ranSetup = true;
   }
 
   get bots() {

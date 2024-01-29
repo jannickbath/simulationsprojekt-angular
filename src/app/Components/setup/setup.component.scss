@@ -34,6 +34,7 @@ dialog {
 
 .car {
     position: relative !important;
+    bottom: -8px;
 }
 
 .inputs {
@@ -41,6 +42,10 @@ dialog {
     grid-template-columns: repeat(4, 1fr);
     row-gap: 1.5rem;
     margin-top: 2rem;
+
+    > * {
+        height: 126px;
+    }
 }
 
 .add-bot {
@@ -81,5 +86,35 @@ dialog {
     &.active {
         display: grid;
         place-content: center;
+    }
+}
+
+// Game setup
+.form-fields {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-template-rows: repeat(3, 60px);
+    padding: 1.5rem 4rem;   
+
+    label,
+    input {
+        display: block;
+    }
+
+    label {
+        width: fit-content;
+        margin-bottom: 5px;
+    }
+
+    input {
+        width: 100%;
+        height: 30px;
+        font-size: 18px;
+    }
+
+    .game-setup-submit {
+        height: 65%;
+        grid-row: 3;
+        grid-column: 4;
     }
 }

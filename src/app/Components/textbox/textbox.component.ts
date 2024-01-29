@@ -53,7 +53,9 @@ export class TextboxComponent {
     })
   }
 
-  private handleGameTick() {    
+  private handleGameTick() {
+    if (!this.gameService.ranSetup) return;
+      
     if (!this.running) {
       if (!this._reseted) {
         this.resetPlayerProgress();
