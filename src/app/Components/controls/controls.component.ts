@@ -10,11 +10,18 @@ import { PlayerService } from '../../Services/player.service';
   styleUrl: './controls.component.scss'
 })
 export class ControlsComponent {
-  constructor(public gameService: GameService, public playerService: PlayerService) {}
+  private _gameTicks: number = 0;
 
-  public addBot() {
-    const botCount = this.bots.length;
-    this.playerService.addPlayer("Bot " + (botCount + 1));
+  constructor(public gameService: GameService, public playerService: PlayerService) {
+    this.gameService.tickEventEmitter.subscribe(() => this.handleGameTick())
+  }
+
+  private handleGameTick() {
+    if (this.gameService.running) {
+      this._gameTicks++;
+    }else if (this._gameTicks !== 0) {
+      this._gameTicks = 0;
+    }
   }
 
   public setTickDelay(multiplier: string) {
@@ -29,5 +36,9 @@ export class ControlsComponent {
 
   get bots() {
     return this.playerService.bots;
+  }
+
+  get gameTicks() {
+    return this._gameTicks;
   }
 }
