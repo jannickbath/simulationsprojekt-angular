@@ -1,5 +1,5 @@
 dialog {
-    position: absolute;
+    position: fixed;
     width: 70vw;
     height: 70vh;
     top: 15%;
@@ -9,6 +9,7 @@ dialog {
     background-color: grey;
     box-shadow: 5px 5px 5px black;
     text-align: center;
+    overflow-y: auto;
 
     button {
         font-size: 20px;
@@ -19,13 +20,13 @@ dialog {
     }
 
     .close-button {
-        position: absolute;
+        position: fixed;
         top: 1rem;
         right: 1rem;        
     }
 
     .clear-button {
-        position: absolute;
+        position: fixed;
         bottom: 1rem;
         right: 1rem;
     }
