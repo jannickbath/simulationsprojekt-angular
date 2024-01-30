@@ -2,7 +2,7 @@
     <h1 class="headline">Bot-Setup</h1>
     <div class="description">This is the bot setup. Please fill out the necessary fields.</div>
     <div class="inputs">
-        <div class="player-wrapper" *ngFor="let bot of bots">
+        <div class="player-wrapper" *ngFor="let bot of bots" (click)="removePlayer(bot.id)">
             <app-car [player]="bot"></app-car>
         </div>
         <div class="add-bot active" #addButton (click)="showUtility()" (keydown.enter)="showUtility()" tabindex="0">ADD BOT</div>

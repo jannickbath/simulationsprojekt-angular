@@ -24,6 +24,10 @@ export class SetupBotsComponent {
     this.playerService.addPlayer(this.botNameInput.nativeElement.value, baseSpeed);
   }
 
+  public removePlayer(id: number) {
+    this.playerService.removePlayer(id);
+  }
+
   public handleConfirm() {
     this.addBot(parseInt(this.botInput.nativeElement.value));
     this.hideUtility()

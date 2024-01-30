@@ -88,3 +88,20 @@ dialog {
         place-content: center;
     }
 }
+
+.player-wrapper {
+    position: relative;
+
+    &:hover {
+        cursor: pointer;
+        
+        &::after {
+            content: "Click to remove.";
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            width: 100%;
+            background-color: red;
+        }
+    }    
+}
