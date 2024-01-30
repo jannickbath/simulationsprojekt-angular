@@ -48,12 +48,14 @@ export class SetupComponent {
     const maxTextLength = parseInt(this.textLengthInput.nativeElement.value);
     this.quotableService.maxTextLength = maxTextLength;
     this.gameService.ranSetup = true;
-    this.gameSetup.nativeElement.close();
   }
 
   public handleGameSetupClose() {
     this.gameService.ranSetup = true;
-    this.gameSetup.nativeElement.close();
+  }
+
+  public handleBotSetupClose() {
+    this.gameService.ranBotSetup = true;
   }
 
   get bots() {
@@ -62,5 +64,17 @@ export class SetupComponent {
 
   get botIndex() {
     return this.playerService.bots.length;
+  }
+
+  get ranSetup() {
+    return this.gameService.ranSetup;
+  }
+
+  get ranBotSetup() {
+    return this.gameService.ranBotSetup;
+  }
+
+  get maxTextLength() {
+    return this.quotableService.maxTextLength;
   }
 }

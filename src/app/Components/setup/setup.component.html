@@ -1,4 +1,4 @@
-<dialog open #carSetup>
+<dialog open #carSetup *ngIf="!ranBotSetup">
     <h1 class="headline">Bot-Setup</h1>
     <div class="description">This is the bot setup. Please fill out the necessary fields.</div>
     <div class="inputs">
@@ -14,17 +14,17 @@
             <button class="add-bot__wrapper__confirm" (click)="handleConfirm()">Confirm</button>
         </div>
     </div>
-    <button class="close-button" (click)="carSetup.close()">X</button>
-    <button class="clear-button" (click)="carSetup.close()">Close</button>
+    <button class="close-button" (click)="handleBotSetupClose()">X</button>
+    <button class="clear-button" (click)="handleBotSetupClose()">Close</button>
 </dialog>
 
-<dialog open #gameSetup>
+<dialog open #gameSetup *ngIf="!ranSetup">
     <h1 class="headline">Game-Setup</h1>
     <div class="description">This is the game setup. Please fill out the necessary fields.</div>
     <div class="form-fields">
         <div class="text-length">
             <label for="text-length">Maximale Textlänge:</label>
-            <input #textLengthInput type="text" (keydown.enter)="handleGameSetupSubmit()" name="text-length" placeholder="40" value="40">
+            <input #textLengthInput type="text" (keydown.enter)="handleGameSetupSubmit()" name="text-length" [placeholder]="maxTextLength" [value]="maxTextLength">
         </div>
         <button class="game-setup-submit" (click)="handleGameSetupSubmit()">Submit</button>
     </div>
