@@ -32,32 +32,59 @@ dialog {
     }
 }
 
-// Game setup
-.form-fields {
+.car {
+    position: relative !important;
+    bottom: -8px;
+}
+
+.inputs {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
-    grid-template-rows: repeat(3, 60px);
-    padding: 1.5rem 4rem;   
+    row-gap: 1.5rem;
+    margin-top: 2rem;
 
-    label,
-    input {
+    > * {
+        height: 126px;
+    }
+}
+
+.add-bot {
+    display: none;
+    width: fit-content;
+    height: fit-content;
+    padding: 1rem 2rem;
+    margin: auto;
+    cursor: pointer;
+    background-color: white;
+
+    &.active {
         display: block;
     }
+}
+
+.add-bot__wrapper {
+    display: none;
 
     label {
         width: fit-content;
         margin-bottom: 5px;
     }
 
-    input {
-        width: 100%;
-        height: 30px;
+    &__speed,
+    &__name {
+        height: 25px;
+        border: none;
+        margin-bottom: 5px;
         font-size: 18px;
+        background-color: white;
     }
 
-    .game-setup-submit {
-        height: 65%;
-        grid-row: 3;
-        grid-column: 4;
+    &__confirm {
+        height: 30px;
+    }
+
+    &.active {
+        display: grid;
+        place-content: center;
     }
 }
