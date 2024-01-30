@@ -50,6 +50,7 @@ export class TextboxComponent {
     this._text = []; // initiate loading animation
     this.quotableService.getQuote().subscribe(QResponse => {
       this._text = this.textToLetterArray(QResponse[0].content);
+      this.gameService.fetchedText = QResponse[0].content;
     })
   }
 

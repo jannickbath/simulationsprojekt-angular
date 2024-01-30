@@ -19,8 +19,7 @@ export type Player = {
    */
   progress: number;
   /**
-   * Defines the base progress increase (in %) each game tick.
-   * The actual speed is the base speed with a random offset.
+   * Defines the cpm (characters per minute) of the player. Each minute there are (cpm) amount of characters typed.
    */
   baseSpeed: number;
   /**

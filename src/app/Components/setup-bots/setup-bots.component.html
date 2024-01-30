@@ -10,7 +10,7 @@
             <label for="bot-name">Name:</label>
             <input name="bot-name" type="text" placeholder="Name: Bot {{botIndex + 1}}" value="Bot {{botIndex + 1}}" class="add-bot__wrapper__name" (keydown.enter)="handleConfirm()" #botNameInput>
             <label for="bot-speed">Speed:</label>
-            <input name="bot-speed" type="text" placeholder="Speed: 20" value="20" class="add-bot__wrapper__speed" (keydown.enter)="handleConfirm()" #botInput>
+            <input name="bot-speed" type="text" placeholder="Speed: 300" value="300" class="add-bot__wrapper__speed" (keydown.enter)="handleConfirm()" #botInput>
             <button class="add-bot__wrapper__confirm" (click)="handleConfirm()">Confirm</button>
         </div>
     </div>

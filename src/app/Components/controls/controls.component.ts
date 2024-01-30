@@ -10,19 +10,7 @@ import { PlayerService } from '../../Services/player.service';
   styleUrl: './controls.component.scss'
 })
 export class ControlsComponent {
-  private _gameTicks: number = 0;
-
-  constructor(public gameService: GameService, public playerService: PlayerService) {
-    this.gameService.tickEventEmitter.subscribe(() => this.handleGameTick())
-  }
-
-  private handleGameTick() {
-    if (this.gameService.running) {
-      this._gameTicks++;
-    }else if (this._gameTicks !== 0) {
-      this._gameTicks = 0;
-    }
-  }
+  constructor(public gameService: GameService, public playerService: PlayerService) { }
 
   public setTickDelay(multiplier: string) {
     const defaultTickDelay = this.gameService.defaultTickDelay;
@@ -39,6 +27,10 @@ export class ControlsComponent {
   }
 
   get gameTicks() {
-    return this._gameTicks;
+    return this.gameService.ticks;
+  }
+
+  get passedTime() {
+    return this.gameService.ticks * this.gameService.tickDelay$.value;
   }
 }

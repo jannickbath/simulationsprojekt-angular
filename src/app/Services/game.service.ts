@@ -13,9 +13,11 @@ export class GameService {
   private _winner: Player | null = null;
   private _interval: any;
   private _defaultTickDelay: number = 1000;
+  private _ticks: number = 0;
   public tickDelay$ = new BehaviorSubject<number>(this._defaultTickDelay);
   public ranSetup: boolean = false;
   public ranBotSetup: boolean = false;
+  public fetchedText: string = "";
   public tickEventEmitter = new EventEmitter<never>();
 
   constructor(private playerService: PlayerService, private popupService: PopupService) {
@@ -28,10 +30,12 @@ export class GameService {
     this._interval = setInterval(() => {
       this.tickEventEmitter.emit();
       if (!this._running) return;
+      this._ticks++;
 
       this.playerService.bots.forEach(bot => {
         if (bot.progress < 100) {
-          bot.progress += bot.baseSpeed + Helper.getRandomNumberInRange(-10, 10);
+          const cpm = bot.baseSpeed + Helper.getRandomNumberInRange(-50, 50);
+          bot.progress = this.calculateProgressFromCPM(cpm);
         }else {
           this.handleWinnerBot(bot);
         }
@@ -47,6 +51,13 @@ export class GameService {
     setTimeout(() => this.resetBotProgress(), 1000);
     this._winner = bot;
   }
+  
+  private calculateProgressFromCPM(cpm: number) {
+    const totalCharacters = this.fetchedText.length;
+    const secondsPassed = this._ticks;
+    const minutesPassed = secondsPassed / 60;
+    return ((minutesPassed * cpm) / totalCharacters) * 100;
+  }
 
   public resetBotProgress() {
     this.playerService.bots.forEach(bot => {
@@ -61,6 +72,7 @@ export class GameService {
 
   public stop() {
     this._running = false;
+    this._ticks = 0;
   }
 
   public toggle() {
@@ -73,5 +85,9 @@ export class GameService {
 
   get defaultTickDelay() {
     return this._defaultTickDelay;
+  }
+
+  get ticks() {
+    return this._ticks;
   }
 }
