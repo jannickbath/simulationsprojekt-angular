@@ -10,7 +10,7 @@ import { GameService } from '../../Services/game.service';
   styleUrl: './car.component.scss'
 })
 export class CarComponent {
-  @Input({ required: true }) private player !: Player;
+  @Input({ required: true }) player !: Player;
 
   get carModel() {
     return this.player.human ? "brick" : "default";
