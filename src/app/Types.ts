@@ -23,6 +23,10 @@ export type Player = {
    */
   baseSpeed: number;
   /**
+   * Positive or negative modifier that indirectly changes the baseSpeed. Modifiers are given from consumed items.
+   */
+  speedModifier: number;
+  /**
    * Defines if the player is a bot, or a human player.
    */
   human: boolean;

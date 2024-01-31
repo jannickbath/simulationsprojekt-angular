@@ -11,14 +11,16 @@ export class PlayerService {
       name: "You",
       progress: 0,
       human: true,
-      baseSpeed: 0
+      baseSpeed: 0,
+      speedModifier: 0
     },
     {
       id: 2,
       name: "Gustaf",
       progress: 0,
       human: false,
-      baseSpeed: 300
+      baseSpeed: 300,
+      speedModifier: 0
     }
   ];
 
@@ -36,7 +38,7 @@ export class PlayerService {
 
   public addPlayer = (name: Player["name"], baseSpeed: Player["baseSpeed"] = 300) => {
     const playerId = this._players.length + 1;
-    this._players.push({id: playerId, name: name, progress: 0, human: false, baseSpeed: baseSpeed});
+    this._players.push({id: playerId, name: name, progress: 0, human: false, baseSpeed: baseSpeed, speedModifier: 0 });
   }
 
   public removePlayer(id: Player["id"]) {

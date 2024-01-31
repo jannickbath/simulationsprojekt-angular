@@ -36,7 +36,7 @@ export class GameService {
       this.playerService.bots.forEach(bot => {
         const items = this.itemService.getItemsFromTargetId(bot.id);
         if (bot.progress < 100) {
-          const cpm = bot.baseSpeed + Helper.getRandomNumberInRange(-50, 50);
+          const cpm = bot.baseSpeed + bot.speedModifier + Helper.getRandomNumberInRange(-50, 50);
           bot.progress = this.calculateProgressFromCPM(cpm);
 
           items.forEach(item => {
@@ -81,6 +81,9 @@ export class GameService {
   public stop() {
     this._running = false;
     this._ticks = 0;
+    this.playerService.bots.forEach(bot => {
+      bot.speedModifier = 0;
+    })
   }
 
   public toggle() {

@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Item } from '../Types';
+import { PlayerService } from './player.service';
 
 @Injectable({
   providedIn: 'root'
@@ -7,7 +8,7 @@ import { Item } from '../Types';
 export class ItemService {
   private _items: Array<Item> = [];
 
-  constructor() {
+  constructor(private playerService: PlayerService) {
     this.addItem(2, "barrier", 50);
     this.addItem(2, "barrier", 75);
   }
@@ -27,10 +28,15 @@ export class ItemService {
 
   public activateItem(id: Item["id"]) {
     const item = this._items.find(item => item.id === id);
+    if (item) {
+      const player = this.playerService.players.find(player => player.id === item.targetId);
 
-    if (item && item.type === "barrier") {
-      console.log("barrier activated");
-      this.removeItem(id);
+      if (player) {
+        if (item.type === "barrier") {
+          player.speedModifier -= 35;
+          this.removeItem(id);
+        }
+      }
     }
   }
 
