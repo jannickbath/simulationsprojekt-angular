@@ -10,19 +10,49 @@ import { ItemService } from './item.service';
   providedIn: 'root'
 })
 export class GameService {
-  private _running: boolean = false;
-  private _winner: Player | null = null;
-  private _interval: any;
   private _defaultTickDelay: number = 1000;
+  private _interval: any;
+  private _running: boolean = false;
   private _ticks: number = 0;
-  public tickDelay$ = new BehaviorSubject<number>(this._defaultTickDelay);
-  public ranSetup: boolean = false;
-  public ranBotSetup: boolean = false;
+  private _winner: Player | null = null;
+
+  get defaultTickDelay() {
+    return this._defaultTickDelay;
+  }
+
   public fetchedText: string = "";
+  public ranBotSetup: boolean = false;
+  public ranSetup: boolean = false;
+
+  get running() {
+    return this._running;
+  }
+
+  public tickDelay$ = new BehaviorSubject<number>(this._defaultTickDelay);
   public tickEventEmitter = new EventEmitter<never>();
+
+  get ticks() {
+    return this._ticks;
+  }
 
   constructor(private playerService: PlayerService, private popupService: PopupService, private itemService: ItemService) {
     this.tickDelay$.subscribe(delay => this.setupGameLoop(delay));
+  }
+
+  private calculateProgressFromCPM(cpm: number) {
+    const totalCharacters = this.fetchedText.length;
+    const secondsPassed = this._ticks;
+    const minutesPassed = secondsPassed / 60;
+    return ((minutesPassed * cpm) / totalCharacters) * 100;
+  }
+
+  private handleWinnerBot(bot: Player) {
+    if (this._winner) return;
+
+    this.stop();
+    this.popupService.addPopup("Game Over!", "Player " + bot.name + " has won!");
+    setTimeout(() => this.resetBotProgress(), 1000);
+    this._winner = bot;
   }
 
   private setupGameLoop(delay: number) {
@@ -60,22 +90,6 @@ export class GameService {
     }, delay);
   }
 
-  private handleWinnerBot(bot: Player) {
-    if (this._winner) return;
-
-    this.stop();
-    this.popupService.addPopup("Game Over!", "Player " + bot.name + " has won!");
-    setTimeout(() => this.resetBotProgress(), 1000);
-    this._winner = bot;
-  }
-  
-  private calculateProgressFromCPM(cpm: number) {
-    const totalCharacters = this.fetchedText.length;
-    const secondsPassed = this._ticks;
-    const minutesPassed = secondsPassed / 60;
-    return ((minutesPassed * cpm) / totalCharacters) * 100;
-  }
-
   public resetBotProgress() {
     this.playerService.bots.forEach(bot => {
       bot.progress = 0;
@@ -97,17 +111,5 @@ export class GameService {
 
   public toggle() {
     this._running = !this._running;
-  }
-
-  get running() {
-    return this._running;
-  }
-
-  get defaultTickDelay() {
-    return this._defaultTickDelay;
-  }
-
-  get ticks() {
-    return this._ticks;
   }
 }

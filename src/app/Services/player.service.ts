@@ -23,22 +23,21 @@ export class PlayerService {
       speedModifier: 0
     }
   ];
-
-  get players() {
-    return this._players;
-  }
-
-  get humanPlayer() {
-    return this._players.find(player => player.human);
+  public addPlayer = (name: Player["name"], baseSpeed: Player["baseSpeed"] = 300) => {
+    const playerId = this._players.length + 1;
+    this._players.push({id: playerId, name: name, progress: 0, human: false, baseSpeed: baseSpeed, speedModifier: 0 });
   }
 
   get bots() {
     return this._players.filter(player => !player.human);
   }
 
-  public addPlayer = (name: Player["name"], baseSpeed: Player["baseSpeed"] = 300) => {
-    const playerId = this._players.length + 1;
-    this._players.push({id: playerId, name: name, progress: 0, human: false, baseSpeed: baseSpeed, speedModifier: 0 });
+  get humanPlayer() {
+    return this._players.find(player => player.human);
+  }
+
+  get players() {
+    return this._players;
   }
 
   public removePlayer(id: Player["id"]) {

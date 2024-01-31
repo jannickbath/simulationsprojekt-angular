@@ -13,10 +13,22 @@ import { PlayerService } from '../../Services/player.service';
   encapsulation: ViewEncapsulation.ShadowDom
 })
 export class SetupBotsComponent {
-  @ViewChild("botWrapper") botWrapper!: ElementRef<HTMLDivElement>;
-  @ViewChild("addButton") addButton!: ElementRef<HTMLButtonElement>;
-  @ViewChild("botInput") botInput!: ElementRef<HTMLInputElement>;
-  @ViewChild("botNameInput") botNameInput!: ElementRef<HTMLInputElement>;
+  @ViewChild("addButton") private addButton!: ElementRef<HTMLButtonElement>;
+  @ViewChild("botInput") private botInput!: ElementRef<HTMLInputElement>;
+  @ViewChild("botNameInput") private botNameInput!: ElementRef<HTMLInputElement>;
+  @ViewChild("botWrapper") private botWrapper!: ElementRef<HTMLDivElement>;
+
+  get botIndex() {
+    return this.playerService.bots.length;
+  }
+
+  get bots() {
+    return this.playerService.bots;
+  }
+
+  get ranBotSetup() {
+    return this.gameService.ranBotSetup;
+  }
 
   constructor(private gameService: GameService, private playerService: PlayerService) { }
 
@@ -24,19 +36,13 @@ export class SetupBotsComponent {
     this.playerService.addPlayer(this.botNameInput.nativeElement.value, baseSpeed);
   }
 
-  public removePlayer(id: number) {
-    this.playerService.removePlayer(id);
+  public handleBotSetupClose() {
+    this.gameService.ranBotSetup = true;
   }
 
   public handleConfirm() {
     this.addBot(parseInt(this.botInput.nativeElement.value));
     this.hideUtility()
-  }
-
-  public showUtility() {
-    this.botWrapper.nativeElement.classList.add("active");
-    this.addButton.nativeElement.classList.remove("active");
-    this.botInput.nativeElement.focus();
   }
 
   public hideUtility() {
@@ -45,19 +51,13 @@ export class SetupBotsComponent {
     this.addButton.nativeElement.focus();
   }
 
-  public handleBotSetupClose() {
-    this.gameService.ranBotSetup = true;
+  public removePlayer(id: number) {
+    this.playerService.removePlayer(id);
   }
 
-  get ranBotSetup() {
-    return this.gameService.ranBotSetup;
-  }
-
-  get bots() {
-    return this.playerService.bots;
-  }
-
-  get botIndex() {
-    return this.playerService.bots.length;
+  public showUtility() {
+    this.botWrapper.nativeElement.classList.add("active");
+    this.addButton.nativeElement.classList.remove("active");
+    this.botInput.nativeElement.focus();
   }
 }

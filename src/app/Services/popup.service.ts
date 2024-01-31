@@ -16,11 +16,11 @@ export class PopupService {
     this._popups.push({id: id, headline: headline, description: description});
   }
 
-  public removePopup(id: number) {
-    this._popups = this._popups.filter(popup => popup.id !== id);
-  }
-
   public clearPopups() {
     this._popups = [];
+  }
+
+  public removePopup(id: number) {
+    this._popups = this._popups.filter(popup => popup.id !== id);
   }
 }

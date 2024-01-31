@@ -17,78 +17,19 @@ import { CommonModule } from '@angular/common';
 })
 
 export class TextboxComponent {
-  private _text: Array<Letter> = [];
   private _cursorIndex: number = 0;
-  private _reseted: boolean = false;
-  @ViewChild("textbox") textbox!: ElementRef;
 
   private get _player() {
     return this.playerService.humanPlayer;
-  }
-
-  public get running() {
-    return this.gameService.running;
   }
 
   private get _progress() {
     return Math.floor(this._player ? this._player.progress : 0);
   }
 
-  public get textHtml() {
-    return this.letterArrayToHtml(this._text);
-  }
-
-  constructor(private playerService: PlayerService, private gameService: GameService, private popupService: PopupService, private quotableService: QuotableService) {
-    gameService.tickEventEmitter.subscribe(() => this.handleGameTick());
-  }
-
-  public focusTextbox() {
-    this.textbox.nativeElement.focus();
-  }
-
-  private fetchQuote() {
-    this._text = []; // initiate loading animation
-    this.quotableService.getQuote().subscribe(QResponse => {
-      this._text = this.textToLetterArray(QResponse[0].content);
-      this.gameService.fetchedText = QResponse[0].content;
-    })
-  }
-
-  private handleGameTick() {
-    if (!this.gameService.ranSetup) return;
-      
-    if (!this.running) {
-      if (!this._reseted) {
-        this.resetPlayerProgress();
-        this.fetchQuote();
-        this._reseted = true;
-      }
-    }else {
-      if (this._progress === 100) {
-        this.handleHumanWinner();
-      }
-      this._reseted = false;
-    }
-  }
-
-  private handleHumanWinner() {
-    this.popupService.addPopup("Game Over!", "You have won the game!");
-    this.gameService.stop();
-    setTimeout(() => this.gameService.resetBotProgress(), 1000);
-  }
-
-  private resetPlayerProgress() {
-    this._text.forEach(letter => {
-      letter.correct = false;
-      letter.typed = false;
-    })
-    this._cursorIndex = 0;
-
-    if (this._player) {
-      this._player.progress = 0;
-    }
-  }
-
+  private _reseted: boolean = false;
+  private _text: Array<Letter> = [];
+  @ViewChild("textbox") private textbox!: ElementRef;
   public handleKeyDown = ($event: KeyboardEvent) => {
     if (!this.running) return;
 
@@ -100,6 +41,26 @@ export class TextboxComponent {
     }
     $event.preventDefault();
     this.handleCharacterKey($event.key);
+  }
+
+  public get running() {
+    return this.gameService.running;
+  }
+
+  public get textHtml() {
+    return this.letterArrayToHtml(this._text);
+  }
+
+  constructor(private playerService: PlayerService, private gameService: GameService, private popupService: PopupService, private quotableService: QuotableService) {
+    gameService.tickEventEmitter.subscribe(() => this.handleGameTick());
+  }
+
+  private fetchQuote() {
+    this._text = []; // initiate loading animation
+    this.quotableService.getQuote().subscribe(QResponse => {
+      this._text = this.textToLetterArray(QResponse[0].content);
+      this.gameService.fetchedText = QResponse[0].content;
+    })
   }
 
   private handleBackspace() {
@@ -127,16 +88,27 @@ export class TextboxComponent {
     this.updateProgress();
   }
 
-  private updateProgress() {
-    const correctLetters = this._text.filter(letter => letter.correct);
-    if (this._player) {
-      this._player.progress = (correctLetters.length / this._text.length) * 100;
+  private handleGameTick() {
+    if (!this.gameService.ranSetup) return;
+      
+    if (!this.running) {
+      if (!this._reseted) {
+        this.resetPlayerProgress();
+        this.fetchQuote();
+        this._reseted = true;
+      }
+    }else {
+      if (this._progress === 100) {
+        this.handleHumanWinner();
+      }
+      this._reseted = false;
     }
   }
 
-  private textToLetterArray(text: string): Array<Letter> {
-    const textArr = text.split("");
-    return textArr.map(letter => ({content: letter, correct: false, typed: false}))
+  private handleHumanWinner() {
+    this.popupService.addPopup("Game Over!", "You have won the game!");
+    this.gameService.stop();
+    setTimeout(() => this.gameService.resetBotProgress(), 1000);
   }
 
   private letterArrayToHtml(letterArray: Array<Letter>): string {
@@ -150,5 +122,33 @@ export class TextboxComponent {
       }
       return `<span class='invalid${cursorClass}'>` + letter.content + `</span>`;
     }).join("");
+  }
+
+  private resetPlayerProgress() {
+    this._text.forEach(letter => {
+      letter.correct = false;
+      letter.typed = false;
+    })
+    this._cursorIndex = 0;
+
+    if (this._player) {
+      this._player.progress = 0;
+    }
+  }
+
+  private textToLetterArray(text: string): Array<Letter> {
+    const textArr = text.split("");
+    return textArr.map(letter => ({content: letter, correct: false, typed: false}))
+  }
+
+  private updateProgress() {
+    const correctLetters = this._text.filter(letter => letter.correct);
+    if (this._player) {
+      this._player.progress = (correctLetters.length / this._text.length) * 100;
+    }
+  }
+
+  public focusTextbox() {
+    this.textbox.nativeElement.focus();
   }
 }

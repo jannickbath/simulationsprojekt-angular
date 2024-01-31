@@ -11,12 +11,13 @@ import { CommonModule } from '@angular/common';
 })
 
 export class PopupComponent {
-  constructor(protected popupService: PopupService) { }
+  public clearPopups = () => this.popupService.clearPopups();
 
   public get popups() {
     return [...this.popupService.popups].reverse();
   }
-  
+
   public removePopup = (id: number) => this.popupService.removePopup(id);
-  public clearPopups = () => this.popupService.clearPopups();
+
+  constructor(protected popupService: PopupService) { }
 }

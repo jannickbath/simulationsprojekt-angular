@@ -10,9 +10,7 @@ import { GameService } from '../../Services/game.service';
   styleUrl: './car.component.scss'
 })
 export class CarComponent {
-  @Input({ required: true }) player !: Player;
-
-  constructor(private gameService: GameService) {}
+  @Input({ required: true }) private player !: Player;
 
   get carModel() {
     return this.player.human ? "brick" : "default";
@@ -26,4 +24,6 @@ export class CarComponent {
     const transitionTime = this.gameService.tickDelay$.value * 1.5;
     return `left ${transitionTime}ms linear`;
   }
+
+  constructor(private gameService: GameService) {}
 }

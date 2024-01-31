@@ -14,13 +14,13 @@ import { Item } from '../../Types';
   styleUrl: './tracks.component.scss'
 })
 export class TracksComponent {
+  get items() {
+    return this.itemService.items;
+  }
+
   constructor(public playerService: PlayerService, private itemService: ItemService) { }
 
   public getItemsFromTargetId(targetId: Item["targetId"]) {
     return this.itemService.getItemsFromTargetId(targetId);
-  }
-
-  get items() {
-    return this.itemService.items;
   }
 }
