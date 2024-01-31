@@ -5,5 +5,9 @@
         </ul>
         <div class="player-speed" *ngIf="!player.human">{{player.baseSpeed}}</div>
         <app-car [player]="player"></app-car>
+        
+        <div class="item" *ngFor="let item of getItemsFromTargetId(player.id)" [style.left]="item.position + '%'">
+            {{item.type}}
+        </div>
     </li>
 </ul>

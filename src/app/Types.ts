@@ -87,3 +87,12 @@ export type QuotableApiResponse = {
    */
   dateModified: string;
 }
+
+export type Item = {
+  id: number;
+  targetId: number;
+  type: ItemType;
+  position: number;
+}
+
+type ItemType = "barrier";

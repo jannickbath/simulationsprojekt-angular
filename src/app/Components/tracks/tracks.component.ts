@@ -3,6 +3,8 @@ import { PlayerService } from '../../Services/player.service';
 import { CommonModule } from '@angular/common';
 import { ValidatePipe } from '../../Pipes/validate.pipe';
 import { CarComponent } from '../car/car.component';
+import { ItemService } from '../../Services/item.service';
+import { Item, Player } from '../../Types';
 
 @Component({
   selector: 'app-tracks',
@@ -12,5 +14,13 @@ import { CarComponent } from '../car/car.component';
   styleUrl: './tracks.component.scss'
 })
 export class TracksComponent {
-  constructor(public playerService: PlayerService) {}
+  constructor(public playerService: PlayerService, private itemService: ItemService) { }
+
+  public getItemsFromTargetId(targetId: Item["targetId"]) {
+    return this.itemService.getItemsFromTargetId(targetId);
+  }
+
+  get items() {
+    return this.itemService.items;
+  }
 }
