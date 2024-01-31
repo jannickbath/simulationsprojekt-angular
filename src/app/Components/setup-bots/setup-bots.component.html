@@ -5,15 +5,15 @@
         <div class="player-wrapper" *ngFor="let bot of bots" (click)="removePlayer(bot.id)">
             <app-car [player]="bot"></app-car>
         </div>
-        <div class="add-bot active" #addButton (click)="showUtility()" (keydown.enter)="showUtility()" tabindex="0">ADD BOT</div>
+        <div class="add-bot active" #addButton (click)="showUtility()" (keydown.enter)="showUtility()" tabindex="0" title="Click to add bot">ADD BOT</div>
         <div class="add-bot__wrapper" #botWrapper>
             <label for="bot-name">Name:</label>
-            <input name="bot-name" type="text" placeholder="Name: Bot {{botIndex + 1}}" value="Bot {{botIndex + 1}}" class="add-bot__wrapper__name" (keydown.enter)="handleConfirm()" #botNameInput>
+            <input name="bot-name" type="text" placeholder="Name: Bot {{botIndex + 1}}" value="Bot {{botIndex + 1}}" class="add-bot__wrapper__name" (keydown.enter)="handleConfirm()" #botNameInput title="Enter the name of the bot">
             <label for="bot-speed">Speed:</label>
-            <input name="bot-speed" type="text" placeholder="Speed: 300" value="300" class="add-bot__wrapper__speed" (keydown.enter)="handleConfirm()" #botInput>
+            <input name="bot-speed" type="text" placeholder="Speed: 300" value="300" class="add-bot__wrapper__speed" (keydown.enter)="handleConfirm()" #botInput title="Enter the speed of the bot in cpm (characters per minute)">
             <button class="add-bot__wrapper__confirm" (click)="handleConfirm()">Confirm</button>
         </div>
     </div>
-    <button class="close-button" (click)="handleBotSetupClose()">X</button>
-    <button class="clear-button" (click)="handleBotSetupClose()">Close</button>
+    <button class="close-button" (click)="handleBotSetupClose()" title="Click to close the menu">X</button>
+    <button class="clear-button" (click)="handleBotSetupClose()" title="Click to close the menu">Close</button>
 </dialog>

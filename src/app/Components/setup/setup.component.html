@@ -4,10 +4,10 @@
     <div class="form-fields">
         <div class="text-length">
             <label for="text-length">Maximale Textlänge:</label>
-            <input #textLengthInput type="text" (keydown.enter)="handleGameSetupSubmit()" name="text-length" [placeholder]="maxTextLength" [value]="maxTextLength">
+            <input #textLengthInput type="text" (keydown.enter)="handleGameSetupSubmit()" name="text-length" [placeholder]="maxTextLength" [value]="maxTextLength" title="Enter the maximimum amount of characters the fetched text should have">
         </div>
         <button class="game-setup-submit" (click)="handleGameSetupSubmit()">Submit</button>
     </div>
-    <button class="close-button" (click)="handleGameSetupClose()">X</button>
-    <button class="clear-button" (click)="handleGameSetupClose()">Close</button>
+    <button class="close-button" (click)="handleGameSetupClose()" title="Click to close the menu">X</button>
+    <button class="clear-button" (click)="handleGameSetupClose()" title="Click to close the menu">Close</button>
 </dialog>
