@@ -37,7 +37,16 @@ export class GameService {
         const items = this.itemService.getItemsFromTargetId(bot.id);
         if (bot.progress < 100) {
           const cpm = bot.baseSpeed + bot.speedModifier + Helper.getRandomNumberInRange(-50, 50);
-          bot.progress = this.calculateProgressFromCPM(cpm);
+          const calculatedProgress = this.calculateProgressFromCPM(cpm);
+
+          if (calculatedProgress > bot.progress) {
+            bot.progress = calculatedProgress;
+          }
+
+          const likelihood = (bot.progress / 100) / 2;
+          if (Helper.randomBooleanWithLikelihood(likelihood)) {
+            this.itemService.addItem(bot.id, "barrier", bot.progress + 5);
+          }
 
           items.forEach(item => {
             if (bot.progress >= item.position) {

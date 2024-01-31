@@ -8,10 +8,7 @@ import { PlayerService } from './player.service';
 export class ItemService {
   private _items: Array<Item> = [];
 
-  constructor(private playerService: PlayerService) {
-    this.addItem(2, "barrier", 50);
-    this.addItem(2, "barrier", 75);
-  }
+  constructor(private playerService: PlayerService) { }
 
   public addItem(targetId: Item["targetId"], type: Item["type"], position: Item["position"]) {
     const id = this._items.length + 1;
