@@ -4,7 +4,7 @@ import { CommonModule } from '@angular/common';
 import { ValidatePipe } from '../../Pipes/validate.pipe';
 import { CarComponent } from '../car/car.component';
 import { ItemService } from '../../Services/item.service';
-import { Item, Player } from '../../Types';
+import { Item } from '../../Types';
 
 @Component({
   selector: 'app-tracks',

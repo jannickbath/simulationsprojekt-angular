@@ -25,6 +25,15 @@ export class ItemService {
     return this._items.filter(item => item.targetId === targetId);
   }
 
+  public activateItem(id: Item["id"]) {
+    const item = this._items.find(item => item.id === id);
+
+    if (item && item.type === "barrier") {
+      console.log("barrier activated");
+      this.removeItem(id);
+    }
+  }
+
   get items() {
     return this._items;
   }

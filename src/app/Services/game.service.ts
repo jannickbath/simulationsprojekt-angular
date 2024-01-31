@@ -4,6 +4,7 @@ import { Helper } from '../Helper';
 import { Player } from '../Types';
 import { PopupService } from './popup.service';
 import { BehaviorSubject } from 'rxjs';
+import { ItemService } from './item.service';
 
 @Injectable({
   providedIn: 'root'
@@ -20,7 +21,7 @@ export class GameService {
   public fetchedText: string = "";
   public tickEventEmitter = new EventEmitter<never>();
 
-  constructor(private playerService: PlayerService, private popupService: PopupService) {
+  constructor(private playerService: PlayerService, private popupService: PopupService, private itemService: ItemService) {
     this.tickDelay$.subscribe(delay => this.setupGameLoop(delay));
   }
 
@@ -33,9 +34,16 @@ export class GameService {
       this._ticks++;
 
       this.playerService.bots.forEach(bot => {
+        const items = this.itemService.getItemsFromTargetId(bot.id);
         if (bot.progress < 100) {
           const cpm = bot.baseSpeed + Helper.getRandomNumberInRange(-50, 50);
           bot.progress = this.calculateProgressFromCPM(cpm);
+
+          items.forEach(item => {
+            if (bot.progress >= item.position) {
+              this.itemService.activateItem(item.id);
+            }
+          })
         }else {
           this.handleWinnerBot(bot);
         }
