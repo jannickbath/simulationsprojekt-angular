@@ -36,6 +36,20 @@ describe('Typeracer', () => {
     }
 
     /**
+     * Adds a log entry to the cypress/logs/log.txt file.
+     * 
+     * @param content The description of the log
+     */
+    function addLogEntry(content: string) {
+      const currentDate = new Date().toLocaleDateString('de-DE');
+      const currentTime = new Date().toLocaleTimeString('de-DE', { hour12: false, hour: '2-digit', minute: '2-digit' });
+    
+      const formattedDateTime = `[${currentDate} ${currentTime}] ${content}\n`;
+      
+      cy.writeFile('cypress/logs/log.txt', formattedDateTime, { flag: 'a+' });
+    }
+
+    /**
      * Lets you execute a callback function that provides the contents of the textbox component.
      * 
      * @param cb The callback to be executed, given the textbox content as a parameter
