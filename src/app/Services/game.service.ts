@@ -39,6 +39,10 @@ export class GameService {
     this.tickDelay$.subscribe(delay => this.setupGameLoop(delay));
   }
 
+  set running(value: boolean) {
+    this._running = value;
+  }
+
   private calculateProgressFromCPM(cpm: number) {
     const totalCharacters = this.fetchedText.length;
     const secondsPassed = this._ticks;
@@ -49,7 +53,7 @@ export class GameService {
   private handleWinnerBot(bot: Player) {
     if (this._winner) return;
 
-    this.stop();
+    this._running = false;
     this.popupService.addPopup("Game Over!", "Player " + bot.name + " has won!");
     setTimeout(() => this.resetBotProgress(), 1000);
     this._winner = bot;
@@ -60,7 +64,13 @@ export class GameService {
 
     this._interval = setInterval(() => {
       this.tickEventEmitter.emit();
-      if (!this._running) return;
+      
+      if (!this._running) {
+        this.resetBotProgress();
+        this._ticks = 0;
+        return;
+      }
+
       this._ticks++;
 
       this.playerService.bots.forEach(bot => {
@@ -103,11 +113,6 @@ export class GameService {
 
   public start() {
     this._running = true;
-  }
-
-  public stop() {
-    this._running = false;
-    this._ticks = 0;
   }
 
   public toggle() {

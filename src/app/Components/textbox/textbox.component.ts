@@ -107,7 +107,7 @@ export class TextboxComponent {
 
   private handleHumanWinner() {
     this.popupService.addPopup("Game Over!", "You have won the game!");
-    this.gameService.stop();
+    this.gameService.running = false;
     setTimeout(() => this.gameService.resetBotProgress(), 1000);
   }
 
