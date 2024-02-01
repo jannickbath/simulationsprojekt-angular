@@ -59,14 +59,14 @@ export class TextboxComponent {
 
   private fetchQuote() {
     this._text = []; // initiate loading animation
-    this.quotableService.getQuote(40).subscribe(QResponse => {
+    this.quotableService.getQuote().subscribe(QResponse => {
       this._text = this.textToLetterArray(QResponse[0].content);
       this.gameService.fetchedText = QResponse[0].content;
     })
   }
 
   private addPenaltyTextForHuman() {
-    this.quotableService.getQuote().subscribe(QResponse => {
+    this.quotableService.getQuote(40).subscribe(QResponse => {
       const fetchedTextLetterArray = this.textToLetterArray(QResponse[0].content);
       const space = this.textToLetterArray(" ");
       this._text = [...this._text, ...space, ...fetchedTextLetterArray]

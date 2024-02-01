@@ -12,8 +12,7 @@ export class QuotableService {
 
   constructor(private http: HttpClient) { }
 
-  public getQuote(maxLengthParam: number = 0) {
-    const maxLength = maxLengthParam ? maxLengthParam : this.maxTextLength;
-    return <Observable<Array<QuotableApiResponse>>>this.http.get(this._baseUrl + "?maxLength=" + maxLength);
+  public getQuote(maxLengthParam: number = this.maxTextLength) {
+    return <Observable<Array<QuotableApiResponse>>>this.http.get(this._baseUrl + "?maxLength=" + maxLengthParam);
   }
 }
