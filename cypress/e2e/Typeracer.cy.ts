@@ -17,12 +17,6 @@ describe('Typeracer', () => {
       cy.visit('http://localhost:4200/');
       cy.get(".game-setup .close-button").click();
       cy.get(".bot-setup .close-button").click();
-
-      // Check if the textbox has fetched content
-      cy.wait(3500);
-      useTextBoxContent((text) => {
-        cy.wrap(text).should("not.be.empty");
-      })
     })
 
     /**
@@ -125,10 +119,30 @@ describe('Typeracer', () => {
       cy.get(".speed .speed-display").should("have.text", 0.5);
     })
 
+    it("Has a working bot-setup popup", () => {
+      cy.get(".open-bot-setup").click();
+      cy.get(".bot-setup").should("exist").should("be.visible");
+      cy.get(".bot-setup .close-button").click();
+      cy.get(".bot-setup").should("not.exist");
+    })
+
+    it("Has a working game-setup popup", () => {
+      cy.get(".open-setup").click();
+      cy.get(".game-setup").should("exist").should("be.visible");
+      cy.get(".game-setup .close-button").click();
+      cy.get(".game-setup").should("not.exist");
+    })
+
     /**
      * Checks if bots are moving and progress is updated.
      */
     it("Has working Bots", () => {
+      // Check if the textbox has fetched content
+      cy.wait(3500);
+      useTextBoxContent((text) => {
+        cy.wrap(text).should("not.be.empty");
+      })
+
       cy.get(".game-state-toggle").click();
       cy.wait(1000);
       
@@ -146,24 +160,16 @@ describe('Typeracer', () => {
       });
     });
 
-    it("Has a working bot-setup popup", () => {
-      cy.get(".open-bot-setup").click();
-      cy.get(".bot-setup").should("exist").should("be.visible");
-      cy.get(".bot-setup .close-button").click();
-      cy.get(".bot-setup").should("not.exist");
-    })
-
-    it("Has a working game-setup popup", () => {
-      cy.get(".open-setup").click();
-      cy.get(".game-setup").should("exist").should("be.visible");
-      cy.get(".game-setup .close-button").click();
-      cy.get(".game-setup").should("not.exist");
-    })
-
     /**
      * Checks if textbox displays correct keypress. And if progress is updated accordingly.
      */
     it('Handles correct key press', () => {
+      // Check if the textbox has fetched content
+      cy.wait(3500);
+      useTextBoxContent((text) => {
+        cy.wrap(text).should("not.be.empty");
+      })
+
       cy.get(".game-state-toggle").click();
       cy.wait(300);
 
@@ -185,6 +191,12 @@ describe('Typeracer', () => {
     });
 
     it('Handles Human Winner', () => {
+      // Check if the textbox has fetched content
+      cy.wait(3500);
+      useTextBoxContent((text) => {
+        cy.wrap(text).should("not.be.empty");
+      })
+
       cy.get(".game-state-toggle").click();
       cy.wait(300);
 
@@ -205,6 +217,12 @@ describe('Typeracer', () => {
      * Checks if textbox shows invalid keypress and does not update progress.
      */
     it('Handles incorrect key press', () => {
+      // Check if the textbox has fetched content
+      cy.wait(3500);
+      useTextBoxContent((text) => {
+        cy.wrap(text).should("not.be.empty");
+      })
+
       cy.get(".game-state-toggle").click();
       cy.wait(200);
 
@@ -229,6 +247,12 @@ describe('Typeracer', () => {
      * Checks if the textbox handles backspace input correctly.
      */
     it('Handles backspace key press', () => {
+      // Check if the textbox has fetched content
+      cy.wait(3500);
+      useTextBoxContent((text) => {
+        cy.wrap(text).should("not.be.empty");
+      })
+      
       cy.get(".game-state-toggle").click();
       cy.wait(200);
       
