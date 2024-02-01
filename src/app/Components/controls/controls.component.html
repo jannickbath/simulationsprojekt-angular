@@ -10,8 +10,8 @@
         -
     </div>
     <div class="speed">
-        <div class="speed-display" title="The current game speed is {{range.value}} of the original speed">{{range.value}}</div>
-        <input #range type="range" min="0.5" max="2" step="0.5" (change)="setTickDelay(range.value)" title="Drag to change the speed of the game">
+        <div class="speed-display" title="The current tick delay is {{range.value}} of the original delay">{{range.value}}</div>
+        <input #range type="range" min="0.5" max="2" step="0.5" (change)="setTickDelay(range.value)" value="1" title="Drag to change the delay of each game tick">
     </div>
     <div class="clock">
         <div class="ticks" title="Total game ticks">

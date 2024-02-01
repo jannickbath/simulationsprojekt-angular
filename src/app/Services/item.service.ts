@@ -40,4 +40,8 @@ export class ItemService {
   public removeItem(id: Item["id"]) {
     this._items = this._items.filter(item => item.id !== id);
   }
+
+  public clearItems() {
+    this._items = [];
+  }
 }

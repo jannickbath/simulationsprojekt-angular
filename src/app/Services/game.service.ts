@@ -106,7 +106,8 @@ export class GameService {
     this._ticks = 0;
     this.playerService.bots.forEach(bot => {
       bot.speedModifier = 0;
-    })
+    });
+    this.itemService.clearItems();
   }
 
   public toggle() {
