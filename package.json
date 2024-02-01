@@ -10,7 +10,7 @@
     "compodoc": "npx compodoc -p tsconfig.doc.json",
     "e2e": "ng e2e",
     "cypress:open": "cypress open",
-    "cypress:run": "cypress run"
+    "cypress:run": "cypress run >> cypress/logs/$(date '+%d-%m-%Y_%H-%M-%S').log"
   },
   "private": true,
   "dependencies": {

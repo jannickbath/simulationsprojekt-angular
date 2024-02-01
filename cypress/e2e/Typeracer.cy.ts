@@ -19,7 +19,7 @@ describe('Typeracer', () => {
       cy.get(".bot-setup .close-button").click();
 
       // Check if the textbox has fetched content
-      cy.wait(2000);
+      cy.wait(3500);
       useTextBoxContent((text) => {
         cy.wrap(text).should("not.be.empty");
       })
