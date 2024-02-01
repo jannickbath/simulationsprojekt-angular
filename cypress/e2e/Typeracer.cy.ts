@@ -146,6 +146,20 @@ describe('Typeracer', () => {
       });
     });
 
+    it("Has a working bot-setup popup", () => {
+      cy.get(".open-bot-setup").click();
+      cy.get(".bot-setup").should("exist").should("be.visible");
+      cy.get(".bot-setup .close-button").click();
+      cy.get(".bot-setup").should("not.exist");
+    })
+
+    it("Has a working game-setup popup", () => {
+      cy.get(".open-setup").click();
+      cy.get(".game-setup").should("exist").should("be.visible");
+      cy.get(".game-setup .close-button").click();
+      cy.get(".game-setup").should("not.exist");
+    })
+
     /**
      * Checks if textbox displays correct keypress. And if progress is updated accordingly.
      */
@@ -166,6 +180,23 @@ describe('Typeracer', () => {
           const numericValueOfLeftProperty = parseFloat(el.css("left"));
           expect(numericValueOfLeftProperty).to.be.greaterThan(0); // 0%
         });
+      });
+      cy.get(".game-state-toggle").click();  
+    });
+
+    it('Handles Human Winner', () => {
+      cy.get(".game-state-toggle").click();
+      cy.wait(300);
+
+      useTextBoxContent(text => {
+        const textArray = text.split("");
+        textArray.forEach(char => {
+          focusAndPressKeyInTextbox(char);
+        })
+        cy.wait(100);
+        cy.get(".popup").should("exist").should("be.visible");
+        cy.get(".popup .close-button").click();
+        cy.get(".popup").should("not.exist");
       });
       cy.get(".game-state-toggle").click();  
     });
