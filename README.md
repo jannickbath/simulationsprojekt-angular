@@ -30,6 +30,54 @@ python3 -m http.server 4200
 py -m http.server 4200
 ```
 
+## Beschreibung UI
+
+### Textbox
+
+![](./assets/documentation/textbox.png)
+
+Die Textbox ist ein Hauptbestandteil des Spiels, es ermöglicht dem Spieler mit dem Spiel zu interagieren.
+
+Richtig getippte Buchstaben werden grün markiert. Falsch getippte Buchstaben werden rot markiert.
+
+### Start/Stop Button
+
+![](./assets/documentation/game-state-toggle.png)
+
+Hiermit lässt sich das Spiel starten und beenden. Der Indikator rechts zeigt an, in welchem Zustand sich das Spiel gerade befindet.
+
+### Open Setup
+
+![](./assets/documentation/open-setup.png)
+
+### Open Bots
+
+![](./assets/documentation/open_bots.png)
+
+### Game Delay Slider
+
+![](./assets/documentation/game_delay_slider.png)
+
+### Clock
+
+![](./assets/documentation/clock.png)
+
+### Game Setup
+
+![](./assets/documentation/game_setup.png)
+
+### Bot Setup
+
+![](./assets/documentation/bot-setup.png)
+
+### Game Over
+
+![](./assets/documentation/game-over.png)
+
+### Tracks
+
+![](./assets/documentation/tracks.png)
+
 ## Zufallsparameter
 
 - Welcher Text von der API bezogen wird
