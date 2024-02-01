@@ -125,7 +125,7 @@ export class TextboxComponent {
         // Spawn items
         const humanPlayer = this.playerService.humanPlayer;
         if (humanPlayer) {
-          const likelihood = (this._progress / 100) / 3;
+          const likelihood = (this._progress / 100) / 4;
           if (Helper.randomBooleanWithLikelihood(likelihood)) {
             this.itemService.addItem(humanPlayer.id, "barrier", this._progress + 5);
           }

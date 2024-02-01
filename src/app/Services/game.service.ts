@@ -83,7 +83,7 @@ export class GameService {
             bot.progress = calculatedProgress;
           }
 
-          const likelihood = (bot.progress / 100) / 2;
+          const likelihood = (bot.progress / 100) / 3;
           if (Helper.randomBooleanWithLikelihood(likelihood)) {
             this.itemService.addItem(bot.id, "barrier", bot.progress + 5);
           }
