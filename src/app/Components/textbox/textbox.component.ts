@@ -1,11 +1,13 @@
 import { Component, ElementRef, ViewChild, ViewEncapsulation } from '@angular/core';
-import { Letter } from '../../Types';
+import { Item, Letter } from '../../Types';
 import { ValidatePipe } from '../../Pipes/validate.pipe';
 import { PlayerService } from '../../Services/player.service';
 import { GameService } from '../../Services/game.service';
 import { PopupService } from '../../Services/popup.service';
 import { QuotableService } from '../../Services/quotable.service';
 import { CommonModule } from '@angular/common';
+import { ItemService } from '../../Services/item.service';
+import { Helper } from '../../Helper';
 
 @Component({
   selector: 'app-textbox',
@@ -51,16 +53,35 @@ export class TextboxComponent {
     return this.letterArrayToHtml(this._text);
   }
 
-  constructor(private playerService: PlayerService, private gameService: GameService, private popupService: PopupService, private quotableService: QuotableService) {
+  constructor(private playerService: PlayerService, private gameService: GameService, private popupService: PopupService, private quotableService: QuotableService, private itemService: ItemService) {
     gameService.tickEventEmitter.subscribe(() => this.handleGameTick());
   }
 
   private fetchQuote() {
     this._text = []; // initiate loading animation
-    this.quotableService.getQuote().subscribe(QResponse => {
+    this.quotableService.getQuote(40).subscribe(QResponse => {
       this._text = this.textToLetterArray(QResponse[0].content);
       this.gameService.fetchedText = QResponse[0].content;
     })
+  }
+
+  private addPenaltyTextForHuman() {
+    this.quotableService.getQuote().subscribe(QResponse => {
+      const fetchedTextLetterArray = this.textToLetterArray(QResponse[0].content);
+      const space = this.textToLetterArray(" ");
+      this._text = [...this._text, ...space, ...fetchedTextLetterArray]
+    })
+  }
+
+  private getPlayerItems() {
+    const humanPlayer = this.playerService.humanPlayer;
+    let playerItems: Array<Item> = [];
+
+    if (humanPlayer) {
+      playerItems = this.itemService.items.filter(item => item.targetId === humanPlayer.id);
+    }
+
+    return playerItems;
   }
 
   private handleBackspace() {
@@ -90,7 +111,7 @@ export class TextboxComponent {
 
   private handleGameTick() {
     if (!this.gameService.ranSetup) return;
-      
+
     if (!this.running) {
       if (!this._reseted) {
         this.resetPlayerProgress();
@@ -100,6 +121,26 @@ export class TextboxComponent {
     }else {
       if (this._progress === 100) {
         this.handleHumanWinner();
+      }else {
+        // Spawn items
+        const humanPlayer = this.playerService.humanPlayer;
+        if (humanPlayer) {
+          const likelihood = (this._progress / 100) / 3;
+          if (Helper.randomBooleanWithLikelihood(likelihood)) {
+            this.itemService.addItem(humanPlayer.id, "barrier", this._progress + 5);
+          }
+        }
+        
+        // Activate items
+        const playerItems = this.getPlayerItems();
+        playerItems.forEach(item => {
+          if (this._progress >= item.position) {
+            if (item.type === "barrier") {
+              this.addPenaltyTextForHuman();
+              this.itemService.removeItem(item.id);
+            }
+          }
+        })
       }
       this._reseted = false;
     }
