@@ -1,67 +1,119 @@
 /// <reference types="cypress" />
 
 describe('Typeracer', () => {
-    // before(() => {
-    //   // Check if popup window is displayed correctly
-    //   cy.visit('http://localhost:4200/');
-    //   cy.get(".game-setup").should("exist");
-    // });
+    /**
+     * Checks if setup screens are showed properly.
+     */
+    before(() => {
+      cy.visit('http://localhost:4200/');
+      cy.get(".game-setup").should("exist");
+      cy.get(".bot-setup").should("exist");
+    });
 
-    // beforeEach(() => {
-    //   cy.visit('http://localhost:4200/');
-    //   // Close the popup window
-    //   cy.get(".game-setup .close-button").click();
-    // })
+    /**
+     * Closes the setup screens before each test.
+     */
+    beforeEach(() => {
+      cy.visit('http://localhost:4200/');
+      cy.get(".game-setup .close-button").click();
+      cy.get(".bot-setup .close-button").click();
 
-    // function focusAndPressKeyInTextbox(char: string) {
-    //   cy.get(".textbox").click(); // focus textbox
-    //   cy.get('.input-div').type(char);
-    // }
-
-    // async function useTextBoxContent(cb: (text: string) => void) {
-    //   cy.get(".input-div").invoke("text").then(cb);
-    // }
-
-    // it('Renders correctly with initial text', () => {
-    // //   cy.wait(400);
-    // //   cy.get('.textbox').should('exist');
-    // //   cy.get('.textbox').should("not.be.empty");
-    // });
-
-    it("Renders", () => {
-        cy.visit("http://localhost:4200/");
-        // cy.wait(400);
-        cy.get("div.description");
+      // Check if the textbox has fetched content
+      cy.wait(2000);
+      useTextBoxContent((text) => {
+        cy.wrap(text).should("not.be.empty");
+      })
     })
 
-    // it("Has a before element that is shown by default and hidden on focus", () => {
-    //   cy.get(".textbox").pseudoElement("::before", "opacity").should("eq", "1");
-    //   cy.get(".textbox").click().wait(500);
-    //   cy.get(".textbox").pseudoElement("::before", "opacity").should("eq", "0");
-    // });
+    /**
+     * Types a single character into the textbox component.
+     * 
+     * @param char The character to be typed
+     */
+    function focusAndPressKeyInTextbox(char: string) {
+      cy.get(".textbox").focus(); // focus textbox
+      cy.get('.textbox').type(char);
+    }
 
-    // it('Handles correct key press', () => {
-    //   cy.wait(400);
-    //   useTextBoxContent(text => {
-    //     const correctKey = text[0];
-    //     focusAndPressKeyInTextbox(correctKey);
-        
-    //     cy.get('.previous-text span').last()
-    //       .should('have.text', correctKey)
-    //       .get("b").should("not.exist");
-    //   });    
-    // });
-  
-    // it('Handles incorrect key press', () => {
-    //   cy.wait(400);
-    //   useTextBoxContent(text => {
-    //     const incorrectKey = text[0] == "z" ? "x" : "z";
-    //     focusAndPressKeyInTextbox(incorrectKey);
-    //     cy.get('.previous-text span').last()
-    //       .should("exist")
-    //       .get("b").should("exist");
+    /**
+     * Lets you execute a callback function that provides the contents of the textbox component.
+     * 
+     * @param cb The callback to be executed, given the textbox content as a parameter
+     */
+    async function useTextBoxContent(cb: (text: string) => void) {
+      cy.get(".textbox").invoke("text").then(cb);
+    }
+
+    /**
+     * Checks if all components are rendered and visible.
+     */
+    // it("Components render", () => {
+    //     cy.get("app-textbox").should("exist").should("be.visible");
+    //     cy.get("app-controls").should("exist").should("be.visible");
+    //     cy.get("app-utility").should("exist").should("be.visible");
+    //     cy.get("app-open-setup").should("exist").should("be.visible");
+    //     cy.get("app-open-bots").should("exist").should("be.visible");
+    //     cy.get("app-tracks").should("exist").should("be.visible");
+    //     cy.get("app-car").should("exist").should("be.visible");
+    // })
+
+    // it("Has working Bots", () => {
+    //   cy.get(".game-state-toggle").click();
+    //   cy.wait(1000);
+      
+    //   cy.get('.car-default').should((el) => {
+    //     const numericValueOfLeftProperty = parseFloat(el.css("left"));
+    //     expect(numericValueOfLeftProperty).to.be.greaterThan(0); // 0%
+    //   });
+
+    //   cy.get(".game-state-toggle").click();
+    //   cy.wait(200);
+
+    //   cy.get('.car-default').should((el) => {
+    //     const numericValueOfLeftProperty = parseFloat(el.css("left"));
+    //     expect(numericValueOfLeftProperty).to.be.equal(0); // 0%
     //   });
     // });
+
+    it('Handles correct key press', () => {
+      cy.get(".game-state-toggle").click();
+      cy.wait(300);
+
+      useTextBoxContent(text => {
+        const correctKey = text[0];
+        focusAndPressKeyInTextbox(correctKey);
+
+        cy.get('.textbox span.correct').last()
+          .should('have.text', correctKey)
+          .get(".textbox span.invalid").should("not.exist");
+
+        cy.get('.car-brick').should((el) => {
+          const numericValueOfLeftProperty = parseFloat(el.css("left"));
+          expect(numericValueOfLeftProperty).to.be.greaterThan(0); // 0%
+        });
+      });
+      cy.get(".game-state-toggle").click();  
+    });
+  
+    it('Handles incorrect key press', () => {
+      cy.get(".game-state-toggle").click();
+      cy.wait(200);
+
+      useTextBoxContent(text => {
+        const incorrectKey = text[0] == "z" ? "x" : "z";
+        focusAndPressKeyInTextbox(incorrectKey);
+        
+        cy.get('.textbox span.invalid').last()
+          .should("exist")
+          .get(".textbox span.correct").should("not.exist");
+
+        cy.get('.car-brick').should((el) => {
+          const numericValueOfLeftProperty = parseFloat(el.css("left"));
+          expect(numericValueOfLeftProperty).to.be.equal(0); // 0%
+        });
+      });
+      cy.get(".game-state-toggle").click();
+    });
   
     // it('Handles backspace key press', () => {
     //   cy.wait(400);
@@ -83,20 +135,6 @@ describe('Typeracer', () => {
     //   cy.get(".generate-opponents").click(); // 4
     //   cy.get(".generate-opponents").click(); // 5
     //   cy.get(".car").should("have.length", 4);
-    // });
-
-    // it("Has working bots", () => {
-    //   cy.get(".generate-opponents").click();
-    //   cy.get(".generate-opponents").click();
-
-    //   cy.wait(200);
-    //   cy.get(".start-button").click();
-    //   cy.wait(1000);
-      
-    //   cy.get('.car:not(.own)').should((el) => {
-    //     const numericValueOfLeftProperty = parseFloat(el.css("left"));
-    //     expect(numericValueOfLeftProperty).to.be.greaterThan(0); // 0%
-    //   });
     // });
 
     // it("Has a working player car", () => {
