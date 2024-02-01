@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Item } from '../Types';
 import { PlayerService } from './player.service';
+import { Helper } from '../Helper';
 
 @Injectable({
   providedIn: 'root'
@@ -21,7 +22,7 @@ export class ItemService {
 
       if (player) {
         if (item.type === "barrier") {
-          player.speedModifier -= 35;
+          player.speedModifier -= Helper.getRandomNumberInRange(35, 75);
           this.removeItem(id);
         }
       }
