@@ -95,6 +95,10 @@ export class GameService {
       bot.progress = 0;
     })
     this._winner = null;
+    this.playerService.bots.forEach(bot => {
+      bot.speedModifier = 0;
+    });
+    this.itemService.clearItems();
   }
 
   public start() {
@@ -104,10 +108,6 @@ export class GameService {
   public stop() {
     this._running = false;
     this._ticks = 0;
-    this.playerService.bots.forEach(bot => {
-      bot.speedModifier = 0;
-    });
-    this.itemService.clearItems();
   }
 
   public toggle() {

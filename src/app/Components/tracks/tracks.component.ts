@@ -5,11 +5,12 @@ import { ValidatePipe } from '../../Pipes/validate.pipe';
 import { CarComponent } from '../car/car.component';
 import { ItemService } from '../../Services/item.service';
 import { Item } from '../../Types';
+import { ItemBarrierComponent } from '../item-barrier/item-barrier.component';
 
 @Component({
   selector: 'app-tracks',
   standalone: true,
-  imports: [CommonModule, ValidatePipe, CarComponent],
+  imports: [CommonModule, ValidatePipe, CarComponent, ItemBarrierComponent],
   templateUrl: './tracks.component.html',
   styleUrl: './tracks.component.scss'
 })

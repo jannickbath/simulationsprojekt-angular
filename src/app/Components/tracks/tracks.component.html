@@ -7,7 +7,7 @@
         <app-car [player]="player"></app-car>
         
         <div class="item" *ngFor="let item of getItemsFromTargetId(player.id)" [style.left]="item.position + '%'">
-            {{item.type}}
+            <app-item-barrier *ngIf="item.type === 'barrier'"></app-item-barrier>
         </div>
     </li>
 </ul>
