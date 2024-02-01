@@ -71,6 +71,60 @@ describe('Typeracer', () => {
         cy.get("app-car").should("exist").should("be.visible");
     })
 
+    it("Has working Game-State", () => {
+      cy.get(".game-state-display").should("contain.text", "Paused");
+
+      cy.get(".ticks")
+        .invoke("text")
+        .then(innerText => {
+          const totalTickNumber = parseInt(innerText.replace(/\D/g, ''), 10);
+          cy.wrap(totalTickNumber).should("eq", 0);
+        });
+
+      cy.get(".passed-time")
+        .invoke("text")
+        .then(innerText => {
+          const totalPassedTime = parseInt(innerText.replace(/\D/g, ''), 10);
+          cy.wrap(totalPassedTime).should("eq", 0);
+        });
+
+      cy.get(".game-state-toggle")
+        .should("contain.text", "Start Race")
+        .click()
+        .should("contain.text", "Stop Race");
+
+      cy.get(".game-state-display").should("contain.text", "Running");
+
+      cy.wait(1000);
+
+      cy.get(".ticks")
+        .invoke("text")
+        .then(innerText => {
+          const totalTickNumber = parseInt(innerText.replace(/\D/g, ''), 10);
+          cy.wrap(totalTickNumber).should("eq", 1);
+        });
+
+      cy.get(".passed-time")
+        .invoke("text")
+        .then(innerText => {
+          const totalPassedTime = parseInt(innerText.replace(/\D/g, ''), 10);
+          cy.wrap(totalPassedTime).should("eq", 1);
+        });
+
+      cy.get(".game-state-toggle").click();
+    })
+
+    it("Has working Tick-Delay-Slider", () => {
+      cy.get(".speed .speed-display").should("have.text", 1);
+      cy.get(".speed input")
+        .should("have.value", 1)
+        .invoke("val", 0.5)
+        .trigger("change")
+        .should("have.value", 0.5);
+
+      cy.get(".speed .speed-display").should("have.text", 0.5);
+    })
+
     /**
      * Checks if bots are moving and progress is updated.
      */
