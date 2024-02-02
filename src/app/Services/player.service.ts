@@ -23,11 +23,7 @@ export class PlayerService {
       speedModifier: 0
     }
   ];
-  public addPlayer = (name: Player["name"], baseSpeed: Player["baseSpeed"] = 300) => {
-    const playerId = this._players.length + 1;
-    this._players.push({id: playerId, name: name, progress: 0, human: false, baseSpeed: baseSpeed, speedModifier: 0 });
-  }
-
+  
   get bots() {
     return this._players.filter(player => !player.human);
   }
@@ -38,6 +34,11 @@ export class PlayerService {
 
   get players() {
     return this._players;
+  }
+
+  public addPlayer = (name: Player["name"], baseSpeed: Player["baseSpeed"] = 300) => {
+    const playerId = this._players.length + 1;
+    this._players.push({id: playerId, name: name, progress: 0, human: false, baseSpeed: baseSpeed, speedModifier: 0 });
   }
 
   public removePlayer(id: Player["id"]) {

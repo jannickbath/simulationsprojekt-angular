@@ -19,30 +19,17 @@ import { Helper } from '../../Helper';
 })
 
 export class TextboxComponent {
+  @ViewChild("textbox") private textbox!: ElementRef;
   private _cursorIndex: number = 0;
-
+  private _reseted: boolean = false;
+  private _text: Array<Letter> = [];
+  
   private get _player() {
     return this.playerService.humanPlayer;
   }
 
   private get _progress() {
     return Math.floor(this._player ? this._player.progress : 0);
-  }
-
-  private _reseted: boolean = false;
-  private _text: Array<Letter> = [];
-  @ViewChild("textbox") private textbox!: ElementRef;
-  public handleKeyDown = ($event: KeyboardEvent) => {
-    if (!this.running) return;
-
-    if ($event.key.length > 1) {
-      if ($event.key === "Backspace") {
-        this.handleBackspace();
-      }
-      return;
-    }
-    $event.preventDefault();
-    this.handleCharacterKey($event.key);
   }
 
   public get running() {
@@ -55,6 +42,19 @@ export class TextboxComponent {
 
   constructor(private playerService: PlayerService, private gameService: GameService, private popupService: PopupService, private quotableService: QuotableService, private itemService: ItemService) {
     gameService.tickEventEmitter.subscribe(() => this.handleGameTick());
+  }
+
+  public handleKeyDown = ($event: KeyboardEvent) => {
+    if (!this.running) return;
+
+    if ($event.key.length > 1) {
+      if ($event.key === "Backspace") {
+        this.handleBackspace();
+      }
+      return;
+    }
+    $event.preventDefault();
+    this.handleCharacterKey($event.key);
   }
 
   private fetchQuote() {

@@ -15,21 +15,19 @@ export class GameService {
   private _running: boolean = false;
   private _ticks: number = 0;
   private _winner: Player | null = null;
+  public fetchedText: string = "";
+  public ranBotSetup: boolean = false;
+  public ranSetup: boolean = false;
+  public tickDelay$ = new BehaviorSubject<number>(this._defaultTickDelay);
+  public tickEventEmitter = new EventEmitter<never>();
 
   get defaultTickDelay() {
     return this._defaultTickDelay;
   }
 
-  public fetchedText: string = "";
-  public ranBotSetup: boolean = false;
-  public ranSetup: boolean = false;
-
   get running() {
     return this._running;
   }
-
-  public tickDelay$ = new BehaviorSubject<number>(this._defaultTickDelay);
-  public tickEventEmitter = new EventEmitter<never>();
 
   get ticks() {
     return this._ticks;
