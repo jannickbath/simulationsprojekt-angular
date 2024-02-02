@@ -36,47 +36,106 @@ py -m http.server 4200
 
 ![](./assets/documentation/textbox.png)
 
-Die Textbox ist ein Hauptbestandteil des Spiels, es ermöglicht dem Spieler mit dem Spiel zu interagieren.
+Die Textbox ist ein Hauptbestandteil des Spiels, es ermöglicht dem Spieler direkt mit dem Spiel zu interagieren.
+
+Die Textbox kann verwendet werden, sobald das Spiel gestartet wurde.
 
 Richtig getippte Buchstaben werden grün markiert. Falsch getippte Buchstaben werden rot markiert.
+
+Bei richtig getippten Buchstaben bewegt sich das Auto des Spielers voran.
+
+Der Spieler hat die Möglichkeit zu gewinnen, sobald er alle Zeichen richtig getippt hat. Dabei muss er allerdings schneller als die Bots sein.
 
 ### Start/Stop Button
 
 ![](./assets/documentation/game-state-toggle.png)
 
-Hiermit lässt sich das Spiel starten und beenden. Der Indikator rechts zeigt an, in welchem Zustand sich das Spiel gerade befindet.
+Hiermit lässt sich das Spiel starten und beenden.
+
+Der Indikator rechts zeigt an, in welchem Zustand sich das Spiel gerade befindet ("Paused" oder "Running").
+
+Wenn das Spiel während der Laufzeit beendet wird, dann wird der Fortschritt aller Spieler zurückgesetzt und ein neuer Text von der API bezogen.
 
 ### Open Setup
 
 ![](./assets/documentation/open-setup.png)
 
+Mit diesem Button lässt sich das Menü für die Spiel-Einstellungen öffnen.
+
 ### Open Bots
 
 ![](./assets/documentation/open_bots.png)
+
+Mit diesem Button lässt sich das Menü für die Bot-Konfiguration öffnen.
 
 ### Game Delay Slider
 
 ![](./assets/documentation/game_delay_slider.png)
 
+Mit diesem Slider lässt sich die Simulationsgeschwindigkeit einstellen.
+
+Durch den Slider wird nicht die Simulationsgeschwindigkeit direkt geändert, sondern die Verzögerung zwischen den Spiel-Ticks.
+
+Desto höher der Wert, desto langsamer wird die Simulation, da die Verzögerung erhöht wird.
+
+Es gibt 4 Einstellungsmöglichkeiten:
+ - 0.5 -> Verzögerung = 500ms
+ - 1 -> Verzögerung = 1000ms
+ - 1.5 -> Verzögerung = 1500ms
+ - 2 -> Verzögerung = 2000ms
+
 ### Clock
 
 ![](./assets/documentation/clock.png)
+
+Zeigt die bereits vergangen Ticks und absolute Ausführungszeit an.
 
 ### Game Setup
 
 ![](./assets/documentation/game_setup.png)
 
+Dies ist das Spiel-Einstellungs Popup.
+
+Hier kann die maximale Anzahl an Zeichen für den Text in der Textbox angegeben werden.
+
+Das Text Limit kann durch Aktivierung von Items überschritten werden, denn es bezieht sich nur auf den initialen Text.
+
 ### Bot Setup
 
 ![](./assets/documentation/bot-setup.png)
+
+Dies ist das Popup zur Verwaltung der Bots.
+
+Bots können entfernt werden, indem man mit der Maus auf sie drauf klickt.
+
+Ein neuer Bot kann durch einen Klick auf den Button "ADD BOT" hinzugefügt werden.
+Anschließend wird nach einem Namen und einer Geschwindigkeit (in cpm) gefragt.
+
+- ADD BOT
+  - Name: Name des Bots, wird automatisch mit Bot [index] befüllt
+  - Speed: Geschwindigkeit des Bots, wird automatisch mit 300(cpm) befüllt
 
 ### Game Over
 
 ![](./assets/documentation/game-over.png)
 
+Dieses Popup taucht auf, sobald ein Bot oder der Spieler einen Fortschritt von 100% erreicht hat.
+
+Der Spieler kann dies tun, indem er alle Zeichen in der Textbox richtig getippt hat.
+
+Die Bots erreichen diesen Wert nach einer bestimmten Zeit.
+
 ### Tracks
 
 ![](./assets/documentation/tracks.png)
+
+Diese Komponente veranschaulicht den Fortschritt des Spielers und aller Bots.
+
+Das Auto des Spielers ist immer grün und hat ein leicht anderes Model.
+
+Jedes Auto trägt zusätzlich den Namen des dazugehörigen Spielers, um die Autos besser voneinander unterscheiden zu können.
+
+Die kleine weiße Box zeigt die Base-Geschwindigkeit (in cpm) des jeweiligen Bots an.
 
 ## Zufallsparameter
 
