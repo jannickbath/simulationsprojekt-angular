@@ -41,6 +41,10 @@ export class GameService {
     this._running = value;
   }
 
+  /**
+   * Calculates the progress (in %) based off the given cpm and passed game ticks.
+   * @param cpm 
+   */
   private calculateProgressFromCPM(cpm: number) {
     const totalCharacters = this.fetchedText.length;
     const secondsPassed = this._ticks;
@@ -48,6 +52,11 @@ export class GameService {
     return ((minutesPassed * cpm) / totalCharacters) * 100;
   }
 
+  /**
+   * Shows winner popup and resets bot progress.
+   * 
+   * @param bot The winner bot
+   */
   private handleWinnerBot(bot: Player) {
     if (this._winner) return;
 
@@ -57,6 +66,12 @@ export class GameService {
     this._winner = bot;
   }
 
+  /**
+   * Setup game loop.
+   * Handles item activation and progress for bots.
+   * 
+   * @param delay The tick delay in ms
+   */
   private setupGameLoop(delay: number) {
     if (this._interval) clearInterval(this._interval);
 
@@ -98,6 +113,9 @@ export class GameService {
     }, delay);
   }
 
+  /**
+   * Resets bot progress. Clears winner, speedModifiers and items.
+   */
   public resetBotProgress() {
     this.playerService.bots.forEach(bot => {
       bot.progress = 0;
@@ -109,10 +127,16 @@ export class GameService {
     this.itemService.clearItems();
   }
 
+  /**
+   * Start the game.
+   */
   public start() {
     this._running = true;
   }
 
+  /**
+   * Toggles the game state.
+   */
   public toggle() {
     this._running = !this._running;
   }

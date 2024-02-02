@@ -12,6 +12,12 @@ export class QuotableService {
 
   constructor(private http: HttpClient) { }
 
+  /**
+   * Fetches a random text from the Quotable-API.
+   * 
+   * @param maxLengthParam Maximium amount of characters for the text to be fetched. Defaults to 40 characters.
+   * @returns An Observable that contains an array of quotable responses
+   */
   public getQuote(maxLengthParam: number = this.maxTextLength) {
     return <Observable<Array<QuotableApiResponse>>>this.http.get(this._baseUrl + "?maxLength=" + maxLengthParam);
   }
